@@ -3,7 +3,7 @@ import React from "react";
 
 import PropTypes from "prop-types";
 
-function PurchasedDetailsModal(props) {
+function BidDetailsModal(props) {
 
   const target="#"+props.id;
     
@@ -46,7 +46,7 @@ function PurchasedDetailsModal(props) {
                 <img src={props.imgSrc} />
               </div>
               <div className="modal-footer">
-                <button type="button"   className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Purchased" >Back</button>
+                <button type="button"   className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Bids" >Back</button>
                 <button
                   type="button"
                   className="btn btn-secondary"
@@ -64,4 +64,4 @@ function PurchasedDetailsModal(props) {
     );
 }
 
-export default PurchasedDetailsModal;
+export default BidDetailsModal;
