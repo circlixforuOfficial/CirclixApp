@@ -16,7 +16,7 @@ function ItemCardSmall(props) {
         </div>
         <div className="card-body p-1 ps-3">
           <h5 className="card-title">{props.itemName}</h5>
-          <PurchasedDetailsModal imgSrc={testImg}  id="item1" heading={props.itemName}/>
+          <ItemsDetailModal imgSrc={testImg}  id="item1" heading={props.itemName}/>
         </div>
       </div>
     </> 
