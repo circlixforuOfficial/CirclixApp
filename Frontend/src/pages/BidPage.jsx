@@ -1,17 +1,19 @@
 import React from "react";
+
 import UserNavbar from "../headerComponents/UserNavbar";
-import UserCards from "../UserPageComponents.jsx/UserCards";
+import BidView from "../UserPageComponents.jsx/BidView";
 import UserFooter from "../footerSection/UserFooter";
 
-function UserPage() {
+
+function BidPage(props) {
     
     return(
         <>
         <UserNavbar/>
-        <UserCards/>
+        <BidView/>
         <UserFooter/>
         </>
     );
 }
 
-export default UserPage;
+export default BidPage;

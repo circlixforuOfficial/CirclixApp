@@ -73,14 +73,4 @@ function ServicesSection() {
 }
 
 export default ServicesSection;
-
-<div className="content-container pb-sm-0 p-lg-5">
-  <div className="hero-content pe-4">
-    <div className="p-4 pb-0 pt-lg-5 pb-sm-5 align-items-center">
-      <h3 className="fs-2 text-body-emphasis">Bidding System</h3>
-    </div>
-  </div>
-  <div className=" p-5 m-4 mb-sm-0 shadow-lg">
-    <img src="" alt="" />
-  </div>
-</div>;
+ 

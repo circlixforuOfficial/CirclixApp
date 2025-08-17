@@ -1,17 +1,18 @@
 import React from "react";
+
 import UserNavbar from "../headerComponents/UserNavbar";
-import UserCards from "../UserPageComponents.jsx/UserCards";
+import ItemDetailView from "../UserPageComponents.jsx/ItemDetailView";
 import UserFooter from "../footerSection/UserFooter";
 
-function UserPage() {
+function ItemFullDetail(params) {
     
     return(
         <>
         <UserNavbar/>
-        <UserCards/>
+        <ItemDetailView/>
         <UserFooter/>
         </>
     );
 }
 
-export default UserPage;
+export default ItemFullDetail;

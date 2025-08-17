@@ -1,18 +1,27 @@
 import React from "react";
 
-import ItemsModal from "./ItemsModal";
+
 import PropTypes from "prop-types";
-import testImg from "./icons/arrow-right-circle.svg";
+import arrow from "../assets/arrow-right-circle.svg";
 
 function ItemsDetailModal(props) {
-  const target = "#" + props.id;
-  const targetParent = "#" + props.parentId;
 
-  function Test(e) {
-    e.preventDefault();
-    console.log(targetParent);
-    console.log("Target modal ID:", props.id);
-  }
+  const {
+    id,
+    heading,
+    itemName,
+    category,
+    description,
+    bidLimit,
+    endDate,
+    endTime,
+  } = props;
+
+  const target = "#" + props.id;
+  const expiration = new Date(`${endDate}T${endTime}`);
+  const now = new Date();
+  const status = now > expiration ? "Expired" : "Active";
+
   return (
     <>
       <div>
@@ -39,7 +48,7 @@ function ItemsDetailModal(props) {
                   className="modal-title fs-4"
                   id="exampleModalFullscreenSmLabel"
                 >
-                  {props.heading}
+                  {heading}
                 </h1>
                 <button
                   type="button"
@@ -52,31 +61,53 @@ function ItemsDetailModal(props) {
                 <div>
                   {/*<img src={props.imgSrc} /> */}
                   <img
-                    src={testImg}
+                    src={arrow}
                     style={{ width: "90px" }}
                     className="card-img-top"
                     alt="..."
                   />
                 </div>
                 <div className="d-flex ">
-                  <ul className="list-group list-group-flush  d-flex flex-wrap justify-content-center border">
-                    <li className="list-group-item text-center">Item Name: Item</li>
-                    <li className="list-group-item  text-center">
-                      Category: Category
+                  <ul className="list-group list-group-flush  d-flex flex-wrap justify-content-center border-0">
+                    <li className="list-group-item text-start border-0">
+                      Item Name
                     </li>
-                    <li className="list-group-item  text-center">
-                      Starting Bid: 400
+                    <li className="list-group-item  text-start border-0">
+                      Category
                     </li>
-                    <li className="list-group-item  text-center">
-                      Bid Expiration:
+                    <li className="list-group-item  text-start border-0">
+                      Description 
                     </li>
-                    <li className="list-group-item  text-center">
-                      Status: Not Available
+                    <li className="list-group-item  text-start border-0">
+                      Bid limit
+                    </li>
+                    <li className="list-group-item  text-start border-0">
+                      Status
+                    </li>
+                  </ul>
+                  <ul className="list-group list-group-flush  d-flex flex-wrap justify-content-center border-0">
+                    <li className="list-group-item text-start border-0">
+                      {": "}{itemName}
+                    </li>
+                    <li className="list-group-item  text-start border-0">
+                      {": "}{category}
+                    </li>
+                    <li className="list-group-item  text-start border-0">
+                     {": "}{description}
+                    </li>
+                    <li className="list-group-item  text-start border-0">
+                      {": "}{bidLimit}
+                    </li>
+                    <li className="list-group-item  text-start border-0">
+                      {": "} {status}
                     </li>
                   </ul>
                 </div>
               </div>
               <div className="modal-footer">
+                <form action="/details">
+                  <button className="btn bg-primary">View Full</button>
+                </form>
                 <button
                   type="button"
                   className="btn btn-secondary"
@@ -92,13 +123,25 @@ function ItemsDetailModal(props) {
     </>
   );
 
-  ItemsDetailModal.propTypes = {
+   ItemsDetailModal.propTypes = {
     id: PropTypes.string,
-    modelId: PropTypes.string,
+    heading: PropTypes.string,
+    itemName: PropTypes.string,
+    category: PropTypes.string,
+    description: PropTypes.string,
+    bidLimit: PropTypes.string,
+    endDate: PropTypes.string,
+    endTime: PropTypes.string,
   };
   ItemsDetailModal.defaultProps = {
     id: "Item",
-    modelId: "Purchased",
+    heading: "Item Details",
+    itemName: "Item",
+    category: "Category",
+    description: "No description provided.",
+    bidLimit: "N/A",
+    endDate: "2025-12-31",
+    endTime: "23:59",
   };
 }
 

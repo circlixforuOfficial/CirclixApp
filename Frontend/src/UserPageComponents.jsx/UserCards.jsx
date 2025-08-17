@@ -1,61 +1,184 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 import ItemCardSmall from "./ItemCardSmall";
-import ItemsModal from "./ItemsModal";
+import CreatePostModal from "./CreatePostModal";
 import UserProfileCard from "./UserProfileCard";
+import ItemContainer from "./ItemContainer";
+import arrow from "../assets/arrow-right-circle.svg";
 
 function UserCards(props) {
+  const { token } = useParams();
+
+  const [userData, setUserData] = useState({
+    firstName: "Kisame",
+    lastName: "Hoshigaki",
+    tpNumber: "123",
+    address: "Kirigakure",
+    DOB: "1960-10-10",
+    email: "samehada@akatsuki.com",
+    nic: "123",
+    userProfile: "",
+  });
+  const [useImg, setUserImg] = useState(null);
+
+  const [bidData, setBidData] = useState();
+  const [myPostsData, setMyPostsData] = useState();
+  const [purchasesData, setPurchasesData] = useState();
+
+  {
+    /*Fetch user data */
+  }
+  const fetchUserData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const { data } = await axios.get("http://localhost:8080/api/v1/user/me", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setUserData(data);
+      fetchUserImage(data.userProfile);
+    } catch (err) {
+      console.error("Failed to fetch user data:", err);
+    }
+  };
+
+  //Fetch profile pic using URL
+  const fetchUserImage = async (userProfile) => {
+    try {
+      const token = localStorage.getItem("token");
+      const { data } = await axios.get(userProfile, {
+        headers: { Authorization: `Bearer ${token}` },
+        responseType: "blob", // if it's binary
+      });
+      const userImage = URL.createObjectURL(data);
+      setUserImg(userImage);
+    } catch (err) {
+      console.error("Failed to fetch user image:", err);
+    }
+  };
+
+  {
+    /*Fetch bid data */
+  }
+  const fetchBidData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const { data } = await axios.get(
+        "http://localhost:8080/api/v1/user/profile",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setBidData(data);
+    } catch (err) {
+      console.error("Failed to fetch bid data:", err);
+    }
+  };
+
+  {
+    /*Feetch My post data */
+  }
+  const fetchMyPostsData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const { data } = await axios.get(
+        "http://localhost:8080/api/v1/user/profile",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setMyPostsData(data);
+    } catch (err) {
+      console.error("Failed to fetch my posts data:", err);
+    }
+  };
+  const fetchPurchasesData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const { data } = await axios.get(
+        "http://localhost:8080/api/v1/user/profile",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setPurchasesData(data);
+    } catch (err) {
+      console.error("Failed to fetch purchases data:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+    fetchBidData();
+    fetchMyPostsData();
+    fetchPurchasesData();
+  }, []);
+
   return (
     <>
       <div>
-        <div className="d-flex flex-lg-row flex-sm-column overflow-hidden">
-          <div className="w-100 d-flex flex-lg-row flex-sm-column">
-            <UserProfileCard
-              userName="Kisame"
-              fName="Hoshigaki"
-              lName="Kisame"
-              nic="12345"
-              address="kirigakure"
-              dob="01/01/1990"
-              tpNumber="01234"
-              email="samehada@akatsuki.com"
-            />
-            {/*user Item list */}
-            <div className="h-100 d-flex flex-column bg-dark rounded-4 flex-grow-1">
-              <div className="d-flex flex-wrap bg-white h-50 border rounded-top-4 p-3">
-                <h3 className="fs-4">Purchased</h3>
-                <div className="w-100 d-flex flex-row justify-content-between align-items-center">
-                  <div className="">
-                    <ItemCardSmall itemName="item"/>
-                  </div>
-                  <ItemsModal id="Purchased"/>
-                </div>
-              </div>
-              <div className="d-flex flex-wrap bg-white h-50 border rounded-bottom-4 p-3">
-                <h3 className="fs-4">Bids</h3>
-                <div className="w-100 d-flex flex-row justify-content-between align-items-center">
-                  <div className="">
-                    <ItemCardSmall itemName="item"/>
-                  </div>
-                  <ItemsModal id="Bids"/>
-                </div>
+        <div>
+          <div className="d-flex flex-lg-row flex-sm-column overflow-hidden">
+            <div className="w-100 d-flex flex-lg-row flex-sm-column">
+              <UserProfileCard
+                userImg={useImg || arrow}
+                userName={userData.firstName}
+                fName={userData.firstName}
+                lName={userData.lastName}
+                nic={userData.nic}
+                address={userData.address}
+                dob={userData.DOB}
+                tpNumber={userData.tpNumber}
+                email={userData.email}
+                onProfileUpdate={fetchUserData}
+              />
+              {/*user Item list */}
+              <div className="h-100 d-flex flex-column bg-dark rounded-4 flex-grow-1">
+                <ItemContainer
+                  containerData={bidData}
+                  division="Bids"
+                  navigateTo="/bids"
+                />
+                <ItemContainer
+                  containerData={myPostsData}
+                  division="My posts"
+                  navigateTo="/myposts"
+                />
               </div>
             </div>
           </div>
+          <ItemContainer
+            containerData={purchasesData}
+            division="Purchases"
+            navigateTo="/purchases"
+          />
         </div>
-        {/*items */}
-        <div className="d-flex ps-5 pt-4 flex-column border rounded-4">
-          <h2 className="fs-2">Explore</h2>
-          <form className="d-flex flex-row">
-            <input
-              className="form-control w-25"
-              type="text"
-              placeholder="search by filter"
-            />
-            <button className="btn bg-primary">Search</button>
-          </form>
-          <div className="d-flex flex-wrap pt-3">
-            <ItemCardSmall itemName="Item"/>
+        <div className="d-flex flex-row border rounded-4">
+          <div className="d-flex justify-content-center align-items-center p-3 col-6 border rounded-4">
+            <h2 className="fs-2 me-4">Create Posts</h2>
+            <CreatePostModal />
+          </div>
+          <div className=" h-100 py-3 ps-4 d-flex flex-column justify-content-center border rounded-4 col-6">
+            <div className="d-flex flex-row mb-2 justify-content-center">
+              <h2 className="fs-2 me-4">Explore</h2>
+              <form action="/explore">
+                <button className="btn btn-primary">
+                  See all <img src={arrow} />
+                </button>
+              </form>
+            </div>
+            <form
+              action="/explore"
+              className="d-flex flex-row justify-content-center"
+            >
+              <input
+                className="form-control w-50"
+                type="text"
+                placeholder="search by filter"
+              />
+              <button className="btn bg-primary">Search</button>
+            </form>
           </div>
         </div>
       </div>

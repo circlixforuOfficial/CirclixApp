@@ -1,39 +1,64 @@
-import React from "react";
+import { React, useState } from "react";
 import Icon from "../component/icon";
 import Facebook from "../assets/facebook.svg";
 import Instagram from "../assets/instagram.svg";
 import Email from "../assets/envelope-at-fill.svg";
 
 function ContactSection() {
+
+  const [name, setName] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const mailtoLink = `mailto:circlixforu@gmail.com?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(`Name: ${name}\n\nMessage:\n${message}`)}`;
+    window.location.href = mailtoLink;
+  };
+
+  const handleReset = () => {
+    setName("");
+    setSubject("");
+    setMessage("");
+  };
+
   return (
     <>
       <div className="container px-5 py-5" id="featured-3">
         <div className="d-flex flex-row-reverse justify-content-lg-evenly">
           <div className="w-50 m-3 w-lg-75">
             <h2 className="display-4">Contact Us</h2>
-            <form action="">
+            <form onSubmit={handleSubmit}>
               <div className="mb-2">
                 <label className="w-25 form-label" htmlFor="">
                   Name
                 </label>
-                <input className="form-control" type="text" />
+                <input className="form-control" type="text" value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required/>
               </div>
               <div className="mb-2">
                 <label className="w-25 form-label" htmlFor="">
                   Subject
                 </label>
-                <input className="form-control" type="text" />
+                <input className="form-control" type="text" value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                  required/>
               </div>
 
               <label className="w-25 form-label" htmlFor="">
                 Message
               </label>
-              <textarea className="form-control" name="" id=""></textarea>
+              <textarea className="form-control" value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                required></textarea>
               <div className="d-flex justify-content-evenly">
-                <button className="btn m-2 bg-white border-primary">
+                <button onClick={handleReset} className="btn m-2 bg-white border-primary">
                   Reset
                 </button>
-                <button className="btn m-2 bg-primary">Submit</button>
+                <button type="submit" className="btn m-2 bg-primary">Submit</button>
               </div>
             </form>
           </div>

@@ -1,17 +1,19 @@
 import React from "react";
+
 import UserNavbar from "../headerComponents/UserNavbar";
-import UserCards from "../UserPageComponents.jsx/UserCards";
+import ExploreView from "../UserPageComponents.jsx/ExploreView";
 import UserFooter from "../footerSection/UserFooter";
 
-function UserPage() {
+
+function ExplorePage(props) {
     
     return(
         <>
         <UserNavbar/>
-        <UserCards/>
+        <ExploreView/>
         <UserFooter/>
         </>
     );
 }
 
-export default UserPage;
+export default ExplorePage;

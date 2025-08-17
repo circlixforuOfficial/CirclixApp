@@ -1,17 +1,18 @@
 import React from "react";
+
 import UserNavbar from "../headerComponents/UserNavbar";
-import UserCards from "../UserPageComponents.jsx/UserCards";
+import MyPostView from "../UserPageComponents.jsx/MyPostView";
 import UserFooter from "../footerSection/UserFooter";
 
-function UserPage() {
+function MyPosts(params) {
     
     return(
         <>
         <UserNavbar/>
-        <UserCards/>
+        <MyPostView/>
         <UserFooter/>
         </>
     );
 }
 
-export default UserPage;
+export default MyPosts;
