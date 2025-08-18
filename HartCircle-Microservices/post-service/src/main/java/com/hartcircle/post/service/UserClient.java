@@ -4,6 +4,9 @@ import com.hartcircle.user.dto.UserSummaryDTO;
 import com.hartcircle.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,6 +47,30 @@ public class UserClient {
             return null;
         }
     }
+
+    public UserSummaryDTO getUserSummary(String nic, String authHeader) {
+        try {
+            String url = userServiceUrl + "/api/v1/user/summary/" + nic;
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", authHeader);
+
+            HttpEntity<?> entity = new HttpEntity<>(headers);
+
+            ResponseEntity<UserSummaryDTO> response = restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    entity,
+                    UserSummaryDTO.class
+            );
+
+            return response.getBody();
+        } catch (Exception e) {
+            System.out.println("Failed to fetch user info: " + e.getMessage());
+            return null;
+        }
+    }
+
 
 
 }
