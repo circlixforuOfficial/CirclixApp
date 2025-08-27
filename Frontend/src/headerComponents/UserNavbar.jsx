@@ -69,7 +69,7 @@ function UserNavbar() {
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="/purchases">
-                    Purchases
+                    Bids For My Posts
                   </a>
                 </li>
                 <li className="nav-item">

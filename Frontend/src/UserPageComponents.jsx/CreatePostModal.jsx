@@ -37,7 +37,10 @@ function CreatePostModal(props) {
       image2,
     } = formData;
 
-    
+    if (image1.size > 1 * 1024 * 1024 || image2.size > 1 * 1024 * 1024) {
+      alert("Images must be under 2MB.");
+      return;
+    }
 
     const payload = new FormData();
     payload.append("startDate", startDate);
@@ -66,7 +69,7 @@ function CreatePostModal(props) {
       throw new Error("Empty fields");
       return;
     }
-      await axios.post("https://your-api-endpoint.com/create-post", payload);
+      await axios.post("http://localhost:8081/api/v1/post/CreatePost", payload);
       alert("Post created successfully!");
     } catch (error) {
       console.error("Error creating post:", error);
@@ -87,9 +90,11 @@ function CreatePostModal(props) {
     image2: null,
   });
 
-  document.querySelectorAll("#newItem input[type='file']").forEach((input) => {
-    input.value = "";
-  });
+  document
+      .querySelectorAll("#newItem input[type='file']")
+      .forEach((input) => {
+        input.value = "";
+      });
 };
 
 

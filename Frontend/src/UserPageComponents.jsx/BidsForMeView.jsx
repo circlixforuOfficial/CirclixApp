@@ -1,11 +1,10 @@
 import { React, useState, useEffect } from "react";
 import axios from "axios";
 import ItemCardSmall from "./ItemCardSmall";
-import CreatePostModal from "./CreatePostModal";
 
-function MyPostView(props) {
+function BidsForMeView(props) {
 
-  const testData = [
+   const testData = [
     {
       itemId: "1",
       itemName: "Laptop",
@@ -30,24 +29,24 @@ function MyPostView(props) {
     },
   ];
 
-  const [myPostData, setMyPostData] = useState(
-    {
-      itemId: "",
-      itemName: "",
-      category: "",
-      description: "",
-      bidLimit: "",
-      startDate: "",
-      startTime: "",
-      endDate: "",
-      endTime: "",
-    }
-  );
+  const [bidsForMeData, setBidsForMeData] = useState(
+      {
+        itemId: "",
+        itemName: "",
+        category: "",
+        description: "",
+        bidLimit: "",
+        startDate: "",
+        startTime: "",
+        endDate: "",
+        endTime: "",
+      }
+    );
 
-  {
-    /*Fetch my post data */
+    {
+    /*Fetch bid data */
   }
-  const fetchMyPostData = async () => {
+  const fetchBidsForMeData = async () => {
     try {
       const token = localStorage.getItem("token");
       const { data } = await axios.get(
@@ -56,26 +55,23 @@ function MyPostView(props) {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      setMyPostData(data);
+      setBidsForMeData(data);
     } catch (err) {
       console.error("Failed to fetch bid data:", err);
     }
   };
 
   useEffect(() => {
-    fetchMyPostData();
+    fetchBidsForMeData();
   }, []);
+
 
   return (
     <>
       <div>
         <div>
-          <div className="d-flex justify-content-between px-5 py-4 flex-row border-top">
-            <h2 className="fs-2 ms-1">My Posts</h2>
-            <div className="d-flex align-items-center p-2 border rounded-4">
-              <h2 className="fs-5 me-4">Create Post</h2>
-              <CreatePostModal />
-            </div>
+          <div className="d-flex ps-5 pt-4 flex-column border-top">
+            <h2 className="fs-2 ms-1">Bids For My Posts</h2>
           </div>
           <div className="d-flex flex-wrap py-4 px-5 w-100 vh-100 border rounded-4">
             {testData.map((item) => (
@@ -88,7 +84,7 @@ function MyPostView(props) {
                   bidLimit={item.bidLimit}
                   endDate={item.endDate}
                   endTime={item.endTime}
-                  parentType="mypost"
+                  parentType="bidsforme"
                 />
               ))}
           </div>
@@ -98,4 +94,4 @@ function MyPostView(props) {
   );
 }
 
-export default MyPostView;
+export default BidsForMeView;

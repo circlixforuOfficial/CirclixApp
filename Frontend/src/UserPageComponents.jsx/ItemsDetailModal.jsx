@@ -1,26 +1,35 @@
-import React from "react";
-
-
-import PropTypes from "prop-types";
+import { React, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import arrow from "../assets/arrow-right-circle.svg";
 
 function ItemsDetailModal(props) {
-
   const {
-    id,
-    heading,
+    itemId,
     itemName,
     category,
     description,
     bidLimit,
     endDate,
     endTime,
+    parent,
   } = props;
 
-  const target = "#" + props.id;
+  const navigate = useNavigate();
+
+  const target = "#" + itemId;
   const expiration = new Date(`${endDate}T${endTime}`);
   const now = new Date();
   const status = now > expiration ? "Expired" : "Active";
+
+  const handleViewFull = () => {
+    const Id = itemId; // use the actual prop value
+    console.log("1");
+    console.log(props.parent);
+    navigate(`/details/${Id}/${parent}`);
+    
+    console.log("4");
+  };
+  
 
   return (
     <>
@@ -36,7 +45,7 @@ function ItemsDetailModal(props) {
 
         <div
           className="modal fade"
-          id={props.id}
+          id={itemId}
           tabIndex="-1"
           aria-labelledby="exampleModalFullscreenSmLabel"
           role="dialog"
@@ -48,7 +57,7 @@ function ItemsDetailModal(props) {
                   className="modal-title fs-4"
                   id="exampleModalFullscreenSmLabel"
                 >
-                  {heading}
+                  {itemName}
                 </h1>
                 <button
                   type="button"
@@ -59,7 +68,6 @@ function ItemsDetailModal(props) {
               </div>
               <div className="modal-body d-flex flex-wrap justify-content-evenly">
                 <div>
-                  {/*<img src={props.imgSrc} /> */}
                   <img
                     src={arrow}
                     style={{ width: "90px" }}
@@ -76,7 +84,7 @@ function ItemsDetailModal(props) {
                       Category
                     </li>
                     <li className="list-group-item  text-start border-0">
-                      Description 
+                      Description
                     </li>
                     <li className="list-group-item  text-start border-0">
                       Bid limit
@@ -87,16 +95,20 @@ function ItemsDetailModal(props) {
                   </ul>
                   <ul className="list-group list-group-flush  d-flex flex-wrap justify-content-center border-0">
                     <li className="list-group-item text-start border-0">
-                      {": "}{itemName}
+                      {": "}
+                      {itemName}
                     </li>
                     <li className="list-group-item  text-start border-0">
-                      {": "}{category}
+                      {": "}
+                      {category}
                     </li>
                     <li className="list-group-item  text-start border-0">
-                     {": "}{description}
+                      {": "}
+                      {description}
                     </li>
                     <li className="list-group-item  text-start border-0">
-                      {": "}{bidLimit}
+                      {": "}
+                      {bidLimit}
                     </li>
                     <li className="list-group-item  text-start border-0">
                       {": "} {status}
@@ -105,9 +117,9 @@ function ItemsDetailModal(props) {
                 </div>
               </div>
               <div className="modal-footer">
-                <form action="/details">
-                  <button className="btn bg-primary">View Full</button>
-                </form>
+                <button className="btn bg-primary" onClick={handleViewFull}>
+                  View Full
+                </button>
                 <button
                   type="button"
                   className="btn btn-secondary"
@@ -122,27 +134,7 @@ function ItemsDetailModal(props) {
       </div>
     </>
   );
-
-   ItemsDetailModal.propTypes = {
-    id: PropTypes.string,
-    heading: PropTypes.string,
-    itemName: PropTypes.string,
-    category: PropTypes.string,
-    description: PropTypes.string,
-    bidLimit: PropTypes.string,
-    endDate: PropTypes.string,
-    endTime: PropTypes.string,
-  };
-  ItemsDetailModal.defaultProps = {
-    id: "Item",
-    heading: "Item Details",
-    itemName: "Item",
-    category: "Category",
-    description: "No description provided.",
-    bidLimit: "N/A",
-    endDate: "2025-12-31",
-    endTime: "23:59",
-  };
 }
 
 export default ItemsDetailModal;
+

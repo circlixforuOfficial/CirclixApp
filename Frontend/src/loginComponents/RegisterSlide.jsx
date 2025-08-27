@@ -38,16 +38,14 @@ function RegisterSlide(props) {
         formData
       );
 
-      const { token, user } = response.data;
+      const registraionResponse = response.data;
 
-      if (token) {
-        localStorage.setItem("token", token);
+      if (true) {
         localStorage.setItem("user", JSON.stringify(user));
         alert("Login successful!");
-        navigate(`/user/${token}`);
-
+        alert("please SignIn using NIC and Password.");
       } else {
-        alert("Login failed: No token received.");
+        alert("Login failed!");
       }
     } catch (error) {
       console.error(

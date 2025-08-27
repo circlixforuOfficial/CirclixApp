@@ -1,15 +1,17 @@
 import { React, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate  } from "react-router-dom";
 import axios from "axios";
 
-import ItemCardSmall from "./ItemCardSmall";
 import CreatePostModal from "./CreatePostModal";
 import UserProfileCard from "./UserProfileCard";
-import ItemContainer from "./ItemContainer";
+import BidItemContainer from "./BidItemContainer";
+import MyPostItemContainer from "./MypostItemContainer";
+import BidsForMeContainer from "./BidsForMeContainer";
 import arrow from "../assets/arrow-right-circle.svg";
 
 function UserCards(props) {
   const { token } = useParams();
+  const navigate = useNavigate();
 
   const [userData, setUserData] = useState({
     firstName: "Kisame",
@@ -20,12 +22,10 @@ function UserCards(props) {
     email: "samehada@akatsuki.com",
     nic: "123",
     userProfile: "",
+    myAvgRateValue:"3.333"
   });
   const [useImg, setUserImg] = useState(null);
-
-  const [bidData, setBidData] = useState();
-  const [myPostsData, setMyPostsData] = useState();
-  const [purchasesData, setPurchasesData] = useState();
+  const [searchKeyword, setSearchKeyword] = useState("");
 
   {
     /*Fetch user data */
@@ -33,7 +33,8 @@ function UserCards(props) {
   const fetchUserData = async () => {
     try {
       const token = localStorage.getItem("token");
-      const { data } = await axios.get("http://localhost:8080/api/v1/user/me", {
+      const { data } = await axios.get("http://localhost:8080/api/v1/user/me", 
+        {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUserData(data);
@@ -44,10 +45,10 @@ function UserCards(props) {
   };
 
   //Fetch profile pic using URL
-  const fetchUserImage = async (userProfile) => {
+  const fetchUserImage = async (profileLink) => {
     try {
       const token = localStorage.getItem("token");
-      const { data } = await axios.get(userProfile, {
+      const { data } = await axios.get(profileLink, {
         headers: { Authorization: `Bearer ${token}` },
         responseType: "blob", // if it's binary
       });
@@ -58,66 +59,21 @@ function UserCards(props) {
     }
   };
 
-  {
-    /*Fetch bid data */
-  }
-  const fetchBidData = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const { data } = await axios.get(
-        "http://localhost:8080/api/v1/user/profile",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      setBidData(data);
-    } catch (err) {
-      console.error("Failed to fetch bid data:", err);
+  const handleSearch = (e) => {
+    e.preventDefault(); // prevent form default submission
+    if (searchKeyword.trim()) {
+      navigate(`/explore?keyword=${encodeURIComponent(searchKeyword.trim())}`);
     }
-  };
-
-  {
-    /*Feetch My post data */
-  }
-  const fetchMyPostsData = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const { data } = await axios.get(
-        "http://localhost:8080/api/v1/user/profile",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      setMyPostsData(data);
-    } catch (err) {
-      console.error("Failed to fetch my posts data:", err);
-    }
-  };
-  const fetchPurchasesData = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const { data } = await axios.get(
-        "http://localhost:8080/api/v1/user/profile",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      setPurchasesData(data);
-    } catch (err) {
-      console.error("Failed to fetch purchases data:", err);
-    }
+    window.location.reload();
   };
 
   useEffect(() => {
     fetchUserData();
-    fetchBidData();
-    fetchMyPostsData();
-    fetchPurchasesData();
   }, []);
 
   return (
     <>
-      <div>
+      <div className="user-page">
         <div>
           <div className="d-flex flex-lg-row flex-sm-column overflow-hidden">
             <div className="w-100 d-flex flex-lg-row flex-sm-column">
@@ -131,29 +87,28 @@ function UserCards(props) {
                 dob={userData.DOB}
                 tpNumber={userData.tpNumber}
                 email={userData.email}
+                userImage={userData.userProfile}
                 onProfileUpdate={fetchUserData}
               />
               {/*user Item list */}
               <div className="h-100 d-flex flex-column bg-dark rounded-4 flex-grow-1">
-                <ItemContainer
-                  containerData={bidData}
+                <BidItemContainer
                   division="Bids"
                   navigateTo="/bids"
                 />
-                <ItemContainer
-                  containerData={myPostsData}
-                  division="My posts"
-                  navigateTo="/myposts"
+                <MyPostItemContainer
+                  division="MyPosts"
+                  navigateTo="/myposts" 
                 />
               </div>
             </div>
           </div>
-          <ItemContainer
-            containerData={purchasesData}
-            division="Purchases"
-            navigateTo="/purchases"
+          <BidsForMeContainer
+            division="Bids For My Posts"
+            navigateTo="/bidsforme"
           />
         </div>
+        {/*items */}
         <div className="d-flex flex-row border rounded-4">
           <div className="d-flex justify-content-center align-items-center p-3 col-6 border rounded-4">
             <h2 className="fs-2 me-4">Create Posts</h2>
@@ -169,15 +124,17 @@ function UserCards(props) {
               </form>
             </div>
             <form
-              action="/explore"
               className="d-flex flex-row justify-content-center"
+              onSubmit={handleSearch}
             >
               <input
                 className="form-control w-50"
                 type="text"
                 placeholder="search by filter"
+                value={searchKeyword}
+                onChange={(e) => setSearchKeyword(e.target.value)}
               />
-              <button className="btn bg-primary">Search</button>
+              <button type="submit" className="btn bg-primary">Search</button>
             </form>
           </div>
         </div>

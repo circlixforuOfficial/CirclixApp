@@ -1,18 +1,18 @@
 import React from "react";
 
 import UserNavbar from "../headerComponents/UserNavbar";
-import PuerchasedView from "../UserPageComponents.jsx/PurchasedView";
+import BidsForMeView from "../UserPageComponents.jsx/BidsForMeView";
 import UserFooter from "../footerSection/UserFooter";
 
-function PurchasedPage(params) {
+function BidsForMePage(params) {
     
     return(
         <>
         <UserNavbar/>
-        <PuerchasedView/>
+        <BidsForMeView/>
         <UserFooter/>
         </>
     );
 }
 
-export default PurchasedPage;
+export default BidsForMePage;

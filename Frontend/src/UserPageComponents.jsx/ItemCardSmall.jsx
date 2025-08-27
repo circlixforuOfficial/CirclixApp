@@ -1,36 +1,49 @@
-import {React,useRef,useEffect,useState} from "react";
+import { React, useRef, useEffect, useState } from "react";
 
 import ItemsDetailModal from "./ItemsDetailModal";
 import arrow from "../assets/arrow-right-circle.svg";
-import PropTypes from "prop-types";
 
 function ItemCardSmall(props) {
-  const containerRef = useRef(null);
-  const cardRef =useRef(null);
-  const [numCards,setNumCards] =useState(0);
-  const [cardWidth,setCardWidth] =useState(0);
 
+  const [parent, setParent] = useState("")
   useEffect(() => {
-    const handleResize = () => {
-      if (containerRef.current && cardRef.current) {
-      
-      }
-    }
-  });
+    setParent(props.parentType)
+    console.log(props.parentType);
+    console.log("hi")
+  }, []);
 
   return (
     <>
-      <div className="card p-1 pb-0 me-2 mb-2" style={{width: "170px",height:"185px"}}>
+      <div
+        className="card p-1 pb-0 me-2 mb-2"
+        style={{ width: "170px", height: "185px" }}
+      >
         <div className="d-flex justify-content-center justify-content-center mt-1">
-            <img src={arrow} style={{width: "90px"}} className="card-img-top" alt="..." />
+          <img
+            src={arrow}
+            style={{ width: "90px" }}
+            className="card-img-top"
+            alt="..."
+          />
         </div>
         <div className="card-body p-1 ps-3">
           <h5 className="card-title">{props.itemName}</h5>
-          <h5 className="card-title">{props.modalId}</h5>
-          <ItemsDetailModal imgSrc={arrow} parentId={props.modalId} id="item1" heading={props.itemName}/>
+            <ItemsDetailModal
+              key={props.itemId}
+              itemId={props.itemId}
+              itemName={props.itemName}
+              category={props.category}
+              description={props.description}
+              bidLimit={props.bidLimit}
+              endDate={props.endDate}
+              endTime={props.endTime}
+              parent={parent} 
+            />
+           
         </div>
       </div>
-    </> 
+    </>
   );
 }
+
 export default ItemCardSmall;

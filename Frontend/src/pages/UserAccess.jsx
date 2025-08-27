@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import RegisterInput from "../loginComponents/RegisterInput";
-import SignInInput from "../loginComponents/SignInInput";
+
 import SignInSlide from "../loginComponents/SignInSlide";
 import RegisterSlide from "../loginComponents/RegisterSlide";
 import { useNavigate } from 'react-router-dom';

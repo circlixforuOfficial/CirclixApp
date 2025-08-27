@@ -1,9 +1,10 @@
 import { React, useState, useEffect } from "react";
 import axios from "axios";
 import ItemCardSmall from "./ItemCardSmall";
-import CreatePostModal from "./CreatePostModal";
+import SeeAllBtn from "../component/SeeAllBtn";
 
-function MyPostView(props) {
+function MyPostItemContainer(props) {
+  const [myPostsData, setMyPostsData] = useState();
 
   const testData = [
     {
@@ -30,24 +31,10 @@ function MyPostView(props) {
     },
   ];
 
-  const [myPostData, setMyPostData] = useState(
-    {
-      itemId: "",
-      itemName: "",
-      category: "",
-      description: "",
-      bidLimit: "",
-      startDate: "",
-      startTime: "",
-      endDate: "",
-      endTime: "",
-    }
-  );
-
   {
-    /*Fetch my post data */
+    /*Feetch My post data */
   }
-  const fetchMyPostData = async () => {
+  const fetchMyPostsData = async () => {
     try {
       const token = localStorage.getItem("token");
       const { data } = await axios.get(
@@ -56,29 +43,24 @@ function MyPostView(props) {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      setMyPostData(data);
+      setMyPostsData(data);
     } catch (err) {
-      console.error("Failed to fetch bid data:", err);
+      console.error("Failed to fetch my posts data:", err);
     }
   };
 
   useEffect(() => {
-    fetchMyPostData();
-  }, []);
+      fetchMyPostsData();
+    }, []);
 
   return (
     <>
-      <div>
-        <div>
-          <div className="d-flex justify-content-between px-5 py-4 flex-row border-top">
-            <h2 className="fs-2 ms-1">My Posts</h2>
-            <div className="d-flex align-items-center p-2 border rounded-4">
-              <h2 className="fs-5 me-4">Create Post</h2>
-              <CreatePostModal />
-            </div>
-          </div>
-          <div className="d-flex flex-wrap py-4 px-5 w-100 vh-100 border rounded-4">
-            {testData.map((item) => (
+      <div className="d-flex flex-wrap bg-white h-50 border rounded-top-4 p-3">
+        <h3 className="fs-4">{props.division}</h3>
+        <div className="w-100 d-flex flex-row justify-content-between align-items-center">
+          <div className="d-flex flex-row overflow-hidden">
+            <div className="d-flex flex-row w-100">
+              {testData.map((item) => (
                 <ItemCardSmall
                   key={item.itemId}
                   itemId={item.itemId}
@@ -91,11 +73,13 @@ function MyPostView(props) {
                   parentType="mypost"
                 />
               ))}
+            </div>
           </div>
+          <SeeAllBtn navigateTo={props.navigateTo} />
         </div>
       </div>
     </>
   );
 }
 
-export default MyPostView;
+export default MyPostItemContainer;

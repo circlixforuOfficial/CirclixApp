@@ -3,25 +3,21 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function DeleteProfile() {
-
   const navigate = useNavigate();
-  const [userId,setUserId] =useState("");
+  const [userId, setUserId] = useState("");
 
   const fetchUserData = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        //taking user data
-        const { data } = await axios.get(
-          `http://localhost:8080/api/v1/user/me`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        setUserId(data.userId);
-      } catch (err) {
-        console.error("Failed to fetch user data:", err);
-      }
-    };
+    try {
+      const token = localStorage.getItem("token");
+      //taking user data
+      const { data } = await axios.get(`http://localhost:8080/api/v1/user/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setUserId(data.userId);
+    } catch (err) {
+      console.error("Failed to fetch user data:", err);
+    }
+  };
 
   useEffect(() => {
     fetchUserData();
@@ -29,7 +25,13 @@ function DeleteProfile() {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:8080/api/v1/user/deleteMyAccount/${userId}`);
+      const token = localStorage.getItem("token");
+      await axios.delete(
+        `http://localhost:8080/api/v1/user/deleteMyAccount/${userId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       alert("User deleted successfully!");
       localStorage.removeItem("token");
       localStorage.removeItem("user");
