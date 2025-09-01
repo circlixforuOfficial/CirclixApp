@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+import logo from "../assets/logo.png";
+
 function UserNavbar() {
 
   const navigate = useNavigate();
@@ -25,9 +27,9 @@ function UserNavbar() {
           >
             <span className="navbar-toggler-icon"></span>
           </button>
-          <a className="navbar-brand" href="#">
+          <a className="navbar-brand" href="/user">
             <div>
-              <img src="src\assets\logo.png" height={"35px"} alt="" />
+              <img src={logo} height={"35px"} alt="Circlix logo" />
               <span> Circlix</span>
             </div>
           </a>

@@ -91,7 +91,7 @@ function UserCards(props) {
                 onProfileUpdate={fetchUserData}
               />
               {/*user Item list */}
-              <div className="h-100 d-flex flex-column bg-dark rounded-4 flex-grow-1">
+              <div className="h-100 d-flex flex-column rounded-4 flex-grow-1">
                 <BidItemContainer
                   division="Bids"
                   navigateTo="/bids"

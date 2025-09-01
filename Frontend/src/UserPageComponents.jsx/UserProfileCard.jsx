@@ -29,7 +29,7 @@ function UserProfileCard(props) {
             { label: props.email },
             { label: props.tpNumber },
           ].map(({ label }) => (
-            <li className="list-group-item text-center">{label}</li>
+            <li className="list-group-item text-center w-100">{label}</li>
           ))}
         </ul>
         <div className="card-body text-center">
