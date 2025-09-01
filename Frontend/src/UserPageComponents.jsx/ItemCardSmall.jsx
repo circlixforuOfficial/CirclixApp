@@ -8,8 +8,8 @@ function ItemCardSmall(props) {
   const [parent, setParent] = useState("")
   useEffect(() => {
     setParent(props.parentType)
-    console.log(props.parentType);
-    console.log("hi")
+    //console.log(props.parentType);
+    //console.log("hi")
   }, []);
 
   return (
@@ -37,7 +37,7 @@ function ItemCardSmall(props) {
               bidLimit={props.bidLimit}
               endDate={props.endDate}
               endTime={props.endTime}
-              parent={parent} 
+              parent={props.parentType} 
             />
            
         </div>

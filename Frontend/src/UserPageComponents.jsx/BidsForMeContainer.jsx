@@ -8,7 +8,7 @@ function BidsForMeContainer(props) {
 
   const testData = [
     {
-      itemId: "1",
+      itemId: "5",
       itemName: "Laptop",
       category: "Electronics",
       description: "High-end gaming laptop",
@@ -19,7 +19,7 @@ function BidsForMeContainer(props) {
       endTime: "23:59",
     },
     {
-      itemId: "2",
+      itemId: "6",
       itemName: "Chair",
       category: "Furniture",
       description: "Ergonomic office chair",

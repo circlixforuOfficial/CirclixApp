@@ -8,7 +8,7 @@ function MyPostItemContainer(props) {
 
   const testData = [
     {
-      itemId: "1",
+      itemId: "3",
       itemName: "Laptop",
       category: "Electronics",
       description: "High-end gaming laptop",
@@ -19,7 +19,7 @@ function MyPostItemContainer(props) {
       endTime: "23:59",
     },
     {
-      itemId: "2",
+      itemId: "4",
       itemName: "Chair",
       category: "Furniture",
       description: "Ergonomic office chair",
@@ -50,7 +50,8 @@ function MyPostItemContainer(props) {
   };
 
   useEffect(() => {
-      fetchMyPostsData();
+      //fetchMyPostsData();
+      setMyPostsData(testData);
     }, []);
 
   return (

@@ -26,7 +26,7 @@ function App() {
           <Route path="/bids" element={<BidPage />} />
           <Route path="/explore" element={<ExplorePage />} />
           <Route path="/details" element={<ItemFullDetail />} />
-          <Route path="/details/:id/:type" element={<ItemFullDetail />} />
+          <Route path="/details/:type/:id" element={<ItemFullDetail />} />
           <Route path="/myposts" element={<MyPosts />} />
         </Routes>
       </div>

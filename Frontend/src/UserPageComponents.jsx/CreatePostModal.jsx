@@ -55,20 +55,19 @@ function CreatePostModal(props) {
 
     try {
       if (
-      !startDate ||
-      !endDate ||
-      !startTime ||
-      !endTime ||
-      !bidLimit ||
-      !itemType ||
-      !description ||
-      !image1 ||
-      !image2
-    ) {
-      alert("Please fill in all fields.");
-      throw new Error("Empty fields");
-      return;
-    }
+        !startDate ||
+        !endDate ||
+        !startTime ||
+        !endTime ||
+        !bidLimit ||
+        !itemType ||
+        !description ||
+        !image1 ||
+        !image2
+      ) {
+        alert("Please fill in all fields.");
+        return;
+      }
       await axios.post("http://localhost:8081/api/v1/post/CreatePost", payload);
       alert("Post created successfully!");
     } catch (error) {
@@ -78,25 +77,24 @@ function CreatePostModal(props) {
   };
 
   const handleReset = () => {
-  setFormData({
-    startDate: "",
-    endDate: "",
-    startTime: "",
-    endTime: "",
-    bidLimit: "",
-    itemType: "",
-    description: "",
-    image1: null,
-    image2: null,
-  });
+    setFormData({
+      startDate: "",
+      endDate: "",
+      startTime: "",
+      endTime: "",
+      bidLimit: "",
+      itemType: "",
+      description: "",
+      image1: null,
+      image2: null,
+    });
 
-  document
+    document
       .querySelectorAll("#newItem input[type='file']")
       .forEach((input) => {
         input.value = "";
       });
-};
-
+  };
 
   return (
     <>
@@ -249,7 +247,7 @@ function CreatePostModal(props) {
                 <button
                   type="button"
                   className="btn btn-primary"
-                  onClick={handleSubmit}
+                  onClick={handleReset}
                   data-bs-dismiss="modal"
                 >
                   Reset

@@ -129,7 +129,7 @@ function ItemDetailView(props) {
               </div>
               {/* Action Buttons */}
               <div className="mt-4 d-flex gap-3 justify-content-center">
-                {parentComponent === "myPost" && (
+                {parentComponent === "mypost" && (
                   <>
                     <button
                       className="btn btn-danger"
@@ -146,14 +146,22 @@ function ItemDetailView(props) {
                   </>
                 )}
                 {parentComponent === "bids" && (
+                  <>
+                  <button
+                      className="btn btn-warning"
+                      onClick={handleEditPost}
+                    >
+                      Edit bid
+                    </button>
                   <button
                     className="btn btn-outline-danger"
                     onClick={handleCancelBid}
                   >
                     Cancel Bid
                   </button>
+                  </>
                 )}
-                {parentComponent !== "explore" && (
+                {parentComponent === "explore" && (
                   <button className="btn btn-success" onClick={handleAddBid}>
                     Add Bid
                   </button>

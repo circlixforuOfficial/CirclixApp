@@ -1,11 +1,8 @@
-import React, { useState } from "react";
-
+import React, { useState} from "react";
 import SignInSlide from "../loginComponents/SignInSlide";
 import RegisterSlide from "../loginComponents/RegisterSlide";
-import { useNavigate } from 'react-router-dom';
 
 function UserAccess() {
-const navigate =useNavigate();
 
   {
     /*slide change use states  */

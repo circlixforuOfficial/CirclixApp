@@ -14,6 +14,10 @@ function ItemsDetailModal(props) {
     parent,
   } = props;
 
+  useEffect(() => {
+      //console.log(parent);
+    }, []);
+
   const navigate = useNavigate();
 
   const target = "#" + itemId;
@@ -23,11 +27,9 @@ function ItemsDetailModal(props) {
 
   const handleViewFull = () => {
     const Id = itemId; // use the actual prop value
-    console.log("1");
-    console.log(props.parent);
-    navigate(`/details/${Id}/${parent}`);
+    navigate(`/details/${parent}/${Id}`);
+    window.location.reload();
     
-    console.log("4");
   };
   
 
