@@ -19,4 +19,9 @@ public class GetUserdeatailsService {
         return userClient.getUserInformation(nic);
 
     }
+
+    //This will return user information by sorting TpNumber
+    public UserSummaryDTO sortMobileNumber(String tpNumber){
+        return userClient.getUserInformationwithTpNumber(tpNumber);
+    }
 }

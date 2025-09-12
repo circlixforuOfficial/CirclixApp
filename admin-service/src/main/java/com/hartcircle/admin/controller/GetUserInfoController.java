@@ -28,5 +28,17 @@ public class GetUserInfoController {
                     .body("Error: " + e.getMessage());
         }
     }
+//sort with tpNumber
+    @GetMapping("/user_info/byTPNumber")
+    public ResponseEntity<?> getUserinfoByTPnumber(@RequestParam("tpNumber") String tpNumber){
+
+        try{
+            UserSummaryDTO filteredUser=getUserdeatailsService.sortMobileNumber(tpNumber);
+            return ResponseEntity.ok(filteredUser);
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error: " + e.getMessage());
+        }
+    }
 
 }

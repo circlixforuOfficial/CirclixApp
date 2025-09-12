@@ -65,7 +65,24 @@ public class UserController {
         return ResponseEntity.ok(findUser.getUserId());
     }
 
+    @GetMapping("/userdata/{tpNumber}")
+    public ResponseEntity<UserSummaryDTO> CheckUserBytpNumber(@PathVariable("tpNumber") String tpNumber){
 
+        User user=userRepository.findByTpNumber(tpNumber)
+                .orElseThrow(() -> new RuntimeException("User not found and  TP Number not exist !"));
+        //Rating part not render
+        UserSummaryDTO dto = new UserSummaryDTO();
+        dto.setFirstName(user.getFirstName());
+        dto.setLastName(user.getLastName());
+        dto.setTpNumber(user.getTpNumber());
+        dto.setAddress(user.getAddress());
+        dto.setDob(user.getDOB());
+        dto.setUserID(user.getUserId());
+        dto.setUserProfile("http://localhost:8080/api/v1/user/me/image/" + user.getUserId());
+
+        return ResponseEntity.ok(dto);
+
+    }
 }
 
 
