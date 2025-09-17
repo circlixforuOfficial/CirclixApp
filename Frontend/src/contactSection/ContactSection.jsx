@@ -29,7 +29,7 @@ function ContactSection() {
       <div className="container px-5 py-5" id="featured-3">
         <div className="d-flex flex-row-reverse justify-content-lg-evenly">
           <div className="w-50 m-3 w-lg-75">
-            <h2 className="display-4">Contact Us</h2>
+            <h2 id="scrollspyHeading5" className="display-4">Contact Us</h2>
             <form onSubmit={handleSubmit}>
               <div className="mb-2">
                 <label className="w-25 form-label" htmlFor="">

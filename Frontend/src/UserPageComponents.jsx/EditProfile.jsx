@@ -3,100 +3,27 @@ import axios from "axios";
 
 function EditProfile() {
   const [userData, setUserData] = useState({
-    userId: "",
-    firstName: "",
-    lastName: "",
-    tpNumber: "",
-    address: "",
-    DOB: "",
+    firstName: props.fName,
+    lastName: props.lName,
+    DOB: props.dob,
+    tpNumber: props.tpNumber,
+    password: "",
     email: "",
-    nic: "",
-    password: "",
-    image: null,
+    nic:"",
+    address: props.address,
+    image: props.userImg,
   });
-
-  const [existingData, setExistingData] = useState({
-    userId: "",
-    firstName: "",
-    lastName: "",
-    tpNumber: "",
-    address: "",
-    DOB: "",
-    email: "",
-    nic: "",
-    password: "",
-    userProfile: "",
-    myAvgRateValue: "",
-  });
-
-  const testData = {
-    userId: "",
-    firstName: "Kisame",
-    lastName: "Hoshigaki",
-    tpNumber: "123",
-    address: "Kirigakure",
-    DOB: "1960-10-10",
-    email: "samehada@akatsuki.com",
-    nic: "123",
-    password: "",
-    image: null,
-  };
 
   const [userImgPreview, setUserImgPreview] = useState(null);
 
   // Fetch user data and image separately
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        //taking user data
-        const { data } = await axios.get(
-          `http://localhost:8080/api/v1/user/me`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        setExistingData(data);
-
-        setUserData((prev) => ({
-          ...prev,
-          userId: data.userId,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          tpNumber: data.tpNumber,
-          address: data.address,
-          DOB: data.DOB,
-          email: data.email,
-          nic: data.nic,
-          password: "",
-        }));
-
-        if (data.userProfile) {
-          const { data: imageBlob } = await axios.get(data.userProfile, {
-            headers: { Authorization: `Bearer ${token}` },
-            responseType: "blob",
-          });
-
-          const imageURL = URL.createObjectURL(imageBlob);
-          setUserImgPreview(imageURL);
-
-          setUserData((prev) => ({
-            ...prev,
-            image: imageBlob,
-          }));
-        }
-      } catch (err) {
-        console.error("Failed to fetch user data:", err);
-      }
-    };
-
-    const modal = document.getElementById("editProfileModal");
-    modal.addEventListener("show.bs.modal", fetchUserData);
-
-    return () => {
-      modal.removeEventListener("show.bs.modal", fetchUserData);
-    };
-  }, []);
+    if (props.userImg) {
+      console.log(userData.firstName)
+      console.log(userData);
+      setUserImgPreview(props.userImg);
+    }
+  }, [props.userImg]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -124,7 +51,7 @@ function EditProfile() {
         }
       }
 
-      await axios.put(
+      await axios.patch(
         `http://localhost:8080/api/v1/user/update-user/${userData.userId}`,
         formData,
         {
@@ -136,7 +63,7 @@ function EditProfile() {
       );
       alert("Profile updated successfully!");
     } catch (error) {
-      console.error("Error updating profile:", error);
+      console.error("Error in updating profile:", error);
       alert("Failed to update profile.");
     }
   };
@@ -192,7 +119,7 @@ function EditProfile() {
                   accept="image/*"
                   onChange={handleImageChange}
                 />
-                {userImgPreview && (
+                {props.userImg && (
                   <img
                     src={userImgPreview}
                     alt="Preview"

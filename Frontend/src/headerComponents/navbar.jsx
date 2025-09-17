@@ -43,27 +43,27 @@ function Navbar() {
             <div className="offcanvas-body">
               <ul className="navbar-nav justify-content-end flex-grow-1 pe-1">
                 <li className="nav-item">
-                  <a className="nav-link active" aria-current="page" href="#">
+                  <a className="nav-link active" aria-current="page" href="#scrollspyHeading1">
                     Home
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#scrollspyHeading1">
+                  <a className="nav-link" href="#scrollspyHeading2">
                     Features
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#scrollspyHeading2">
+                  <a className="nav-link" href="#scrollspyHeading3">
                     Services
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#scrollspyHeading3">
+                  <a className="nav-link" href="#scrollspyHeading4">
                     About Us
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#scrollspyHeading4">
+                  <a className="nav-link" href="#scrollspyHeading5">
                     Contact Us
                   </a>
                 </li>

@@ -28,12 +28,10 @@ function SignInSlide(props) {
     /*SignIn data handle */
   }
   const handleDataFromSignInNIC = (data) => {
-    console.log("Received from child:", data);
     setSignInNIC(data);
   };
 
   const handleDataFromSignInPassword = (data) => {
-    console.log("Received from child:", data);
     setSignInPassword(data);
   };
 
@@ -54,7 +52,6 @@ function SignInSlide(props) {
     };
 
     try {
-      console.log(signData);
 
       const response = await axios.post(
         "http://localhost:8080/api/v1/user/signIn",
@@ -66,7 +63,8 @@ function SignInSlide(props) {
         }
       );
 
-      const token = response.data.token;
+      const message = response.data;
+      const token = message.split("Token: ")[1];
 
       if (token) {
         localStorage.setItem("token", token);

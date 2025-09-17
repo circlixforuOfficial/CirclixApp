@@ -46,3 +46,15 @@ body{
   height:38px !important;
   min-height: 37px !important;
 }
+
+.item-container{
+  position: relative;
+}
+
+.see-all-btn{
+  position: absolute;
+  right: 0px;
+  height: 195px;
+  width: 140px;
+  backdrop-filter: blur(10px);
+}

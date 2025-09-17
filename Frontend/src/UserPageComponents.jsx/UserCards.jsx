@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { useParams,useNavigate  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import CreatePostModal from "./CreatePostModal";
@@ -9,22 +9,21 @@ import MyPostItemContainer from "./MypostItemContainer";
 import BidsForMeContainer from "./BidsForMeContainer";
 import arrow from "../assets/arrow-right-circle.svg";
 
-function UserCards(props) {
-  const { token } = useParams();
+function UserCards() {
   const navigate = useNavigate();
 
   const [userData, setUserData] = useState({
-    firstName: "Kisame",
-    lastName: "Hoshigaki",
-    tpNumber: "123",
-    address: "Kirigakure",
-    DOB: "1960-10-10",
-    email: "samehada@akatsuki.com",
-    nic: "123",
+    userID: "",
+    firstName: "",
+    lastName: "",
+    tpNumber: "",
+    dob: "",
+    address: "",
+    nic: "",
     userProfile: "",
-    myAvgRateValue:"3.333"
+    myAvgRateValue: "",
   });
-  const [useImg, setUserImg] = useState(null);
+  const [userImg, setUserImg] = useState(null);
   const [searchKeyword, setSearchKeyword] = useState("");
 
   {
@@ -33,8 +32,7 @@ function UserCards(props) {
   const fetchUserData = async () => {
     try {
       const token = localStorage.getItem("token");
-      const { data } = await axios.get("http://localhost:8080/api/v1/user/me", 
-        {
+      const { data } = await axios.get("http://localhost:8080/api/v1/user/me", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUserData(data);
@@ -47,13 +45,11 @@ function UserCards(props) {
   //Fetch profile pic using URL
   const fetchUserImage = async (profileLink) => {
     try {
-      const token = localStorage.getItem("token");
-      const { data } = await axios.get(profileLink, {
-        headers: { Authorization: `Bearer ${token}` },
-        responseType: "blob", // if it's binary
+      const userImage = await axios.get(profileLink, {
+        responseType: "blob", // This tells Axios to treat it as binary
       });
-      const userImage = URL.createObjectURL(data);
-      setUserImg(userImage);
+      const imageUrl = URL.createObjectURL(userImage.data); // Convert blob to object URL
+      setUserImg(imageUrl);
     } catch (err) {
       console.error("Failed to fetch user image:", err);
     }
@@ -78,28 +74,21 @@ function UserCards(props) {
           <div className="d-flex flex-lg-row flex-sm-column overflow-hidden">
             <div className="w-100 d-flex flex-lg-row flex-sm-column">
               <UserProfileCard
-                userImg={useImg || arrow}
-                userName={userData.firstName}
+                userId={userData.userID}
+                userImg={userImg}
                 fName={userData.firstName}
                 lName={userData.lastName}
-                nic={userData.nic}
-                address={userData.address}
-                dob={userData.DOB}
                 tpNumber={userData.tpNumber}
-                email={userData.email}
+                dob={userData.dob}
+                address={userData.address}
                 userImage={userData.userProfile}
+                rating={userData.myAvgRateValue}
                 onProfileUpdate={fetchUserData}
               />
               {/*user Item list */}
               <div className="h-100 d-flex flex-column rounded-4 flex-grow-1">
-                <BidItemContainer
-                  division="Bids"
-                  navigateTo="/bids"
-                />
-                <MyPostItemContainer
-                  division="MyPosts"
-                  navigateTo="/myposts" 
-                />
+                <BidItemContainer division="Bids" navigateTo="/bids" />
+                <MyPostItemContainer division="MyPosts" navigateTo="/myposts" />
               </div>
             </div>
           </div>
@@ -134,7 +123,9 @@ function UserCards(props) {
                 value={searchKeyword}
                 onChange={(e) => setSearchKeyword(e.target.value)}
               />
-              <button type="submit" className="btn bg-primary">Search</button>
+              <button type="submit" className="btn bg-primary">
+                Search
+              </button>
             </form>
           </div>
         </div>

@@ -27,6 +27,50 @@ function BidItemContainer(props) {
       endDate: "2025-11-30",
       endTime: "18:00",
     },
+    {
+      itemId: "8",
+      itemName: "Laptop",
+      category: "Electronics",
+      description: "High-end gaming laptop",
+      bidLimit: "5000",
+      startDate: "2025-12-31",
+      startTime: "23:59",
+      endDate: "2025-12-31",
+      endTime: "23:59",
+    },
+    {
+      itemId: "9",
+      itemName: "Chair",
+      category: "Furniture",
+      description: "Ergonomic office chair",
+      bidLimit: "1500",
+      startDate: "2025-12-31",
+      startTime: "23:59",
+      endDate: "2025-11-30",
+      endTime: "18:00",
+    },
+    {
+      itemId: "10",
+      itemName: "Laptop",
+      category: "Electronics",
+      description: "High-end gaming laptop",
+      bidLimit: "5000",
+      startDate: "2025-12-31",
+      startTime: "23:59",
+      endDate: "2025-12-31",
+      endTime: "23:59",
+    },
+    {
+      itemId: "11",
+      itemName: "Chair",
+      category: "Furniture",
+      description: "Ergonomic office chair",
+      bidLimit: "1500",
+      startDate: "2025-12-31",
+      startTime: "23:59",
+      endDate: "2025-11-30",
+      endTime: "18:00",
+    },
   ];
 
   const [bidData, setBidData] = useState();
@@ -57,7 +101,7 @@ function BidItemContainer(props) {
     <>
       <div className="d-flex flex-wrap bg-white h-50 border rounded-top-4 p-3">
         <h3 className="fs-4">{props.division}</h3>
-        <div className="w-100 d-flex flex-row justify-content-between align-items-center">
+        <div className="item-container w-100 d-flex flex-row justify-content-between align-items-center">
           <div className="d-flex flex-row overflow-hidden">
             <div className="d-flex flex-row w-100">
               {testData.map((item) => (
@@ -75,7 +119,9 @@ function BidItemContainer(props) {
               ))}
             </div>
           </div>
-          <SeeAllBtn navigateTo={props.navigateTo} />
+          <div className="see-all-btn d-flex justify-content-center align-items-center">
+            <SeeAllBtn navigateTo={props.navigateTo} />
+          </div>
         </div>
       </div>
     </>

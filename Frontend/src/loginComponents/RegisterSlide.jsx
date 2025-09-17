@@ -1,11 +1,9 @@
 import { React, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 import RegisterInput from "./RegisterInput";
 
 function RegisterSlide(props) {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -32,16 +30,24 @@ function RegisterSlide(props) {
   const handleRegister = async (event) => {
     event.preventDefault();
     try {
-      console.log(formData);
+      const data = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        data.append(key, value);
+      });
+
       const response = await axios.post(
         "http://localhost:8080/api/v1/user/signUp",
-        formData
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
 
       const registraionResponse = response.data;
 
-      if (true) {
-        localStorage.setItem("user", JSON.stringify(user));
+      if (registraionResponse) {
         alert("Login successful!");
         alert("please SignIn using NIC and Password.");
       } else {
@@ -50,26 +56,28 @@ function RegisterSlide(props) {
     } catch (error) {
       console.error(
         "Registration error:",
-        error.response?.data || error.message
+        error.response.data || error.message
       );
       alert("Registration failed! Please try again.");
     }
   };
-  {/*Reset inputs */}
-  function restInputs(e) {
+  {
+    /*Reset inputs */
+  }
+  function resetInputs(e) {
     e.preventDefault();
     setFormData({
-    firstName: "",
-    lastName: "",
-    address: "",
-    DOB: "",
-    tpNumber: "",
-    email: "",
-    nic: "",
-    password: "",
-    image: null,
-  })
-  document.getElementById("imgInput").form.reset();
+      firstName: "",
+      lastName: "",
+      address: "",
+      DOB: "",
+      tpNumber: "",
+      email: "",
+      nic: "",
+      password: "",
+      image: null,
+    });
+    document.getElementById("imgInput").form.reset();
   }
 
   return (
@@ -148,9 +156,12 @@ function RegisterSlide(props) {
               accept="image/*"
               className="border-5"
               id="imgInput"
-              onChange={(e) =>
-                setFormData({ ...formData, image: e.target.files[0] })
-              }
+              onChange={(e) => {
+                setFormData((prevData) => ({
+                  ...prevData,
+                  image: e.target.files[0], // store the File object
+                }));
+              }}
             />
             <RegisterInput
               inputId="floatingPassword"
@@ -191,7 +202,10 @@ function RegisterSlide(props) {
               </p>
             </div>
             <div className="d-flex justify-content-between">
-              <button onClick={(e)=>restInputs(e)} className="btn bg-white border-primary btn-md px-3 mb-2 me-5">
+              <button
+                onClick={(e) => resetInputs(e)}
+                className="btn bg-white border-primary btn-md px-3 mb-2 me-5"
+              >
                 Reset
               </button>
               <button

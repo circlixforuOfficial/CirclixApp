@@ -14,22 +14,21 @@ function UserProfileCard(props) {
             className="m-3 rounded-circle shadow-lg overflow-hidden"
             style={{ width: "120px", height: "120px" }}
           >
-            <ApiImage apiUrl={props.userImage} width="120px" height="120px" />
+            <img src={props.userImg} alt="" width="120px" height="120px" />
           </div>
         </div>
         <div className="card-body d-flex flex-column justify-content-center col-lg-12 col-sm-6">
-          <h5 className="card-title text-center">{props.userName}</h5>
+          <h5 className="card-title text-center">{props.fName}</h5>
           <p className="card-text text-center">{userFullName}</p>
         </div>
-        <ul className="list-group list-group-flush  d-flex flex-wrap justify-content-center border">
+        <ul className="list-group list-group-flush  d-flex flex-wrap justify-content-center border" style={{minWidth:"220px"}}>
           {[
-            { label: props.nic },
-            { label: props.dob },
-            { label: props.address },
-            { label: props.email },
-            { label: props.tpNumber },
-          ].map(({ label }) => (
-            <li className="list-group-item text-center w-100">{label}</li>
+            {label:"DOB", value: props.dob },
+            {label:"Address", value: props.address },
+            {label:"TP Number", value: props.tpNumber },
+            {label:"Rating", value: props.rating },
+          ].map(({ label,value }) => (
+            <li className="list-group-item text-center w-100"><span>{label} : </span>{value}</li>
           ))}
         </ul>
         <div className="card-body text-center">
@@ -40,8 +39,16 @@ function UserProfileCard(props) {
           >
             Edit
           </button>
-          <EditProfile userId={props.userId} onUpdate={props.onProfileUpdate} />
-
+          <EditProfile
+            userId={props.userId}
+            userImg={props.userImg}
+            fName={props.fName}
+            lName={props.lName}
+            tpNumber={props.tpNumber}
+            dob={props.dob}
+            address={props.address}
+            onUpdate={props.onProfileUpdate}
+          />
           <button
             className="btn btn-danger my-3 mx-2"
             data-bs-toggle="modal"

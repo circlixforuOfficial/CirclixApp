@@ -6,7 +6,7 @@ function AboutSection() {
       <div className="container px-5 py-5" id="featured-3">
         <div className="d-flex flex-row-reverse justify-content-lg-evenly">
           <div className="w-50 m-3 w-lg-75">
-            <h2 className="display-4">About Us</h2>
+            <h2 id="scrollspyHeading4" className="display-4">About Us</h2>
             <p>
               We are 3rd year undergraduates of the USJ,FAS Department of
               Computer Science working for betterment of the society.

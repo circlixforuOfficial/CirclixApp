@@ -161,6 +161,22 @@ function ItemDetailView(props) {
                   </button>
                   </>
                 )}
+                {parentComponent === "bidsforme" && (
+                  <>
+                  <button
+                      className="btn btn-warning"
+                      onClick={handleEditPost}
+                    >
+                      Edit bid
+                    </button>
+                  <button
+                    className="btn btn-outline-danger"
+                    onClick={handleCancelBid}
+                  >
+                    Cancel Bid
+                  </button>
+                  </>
+                )}
                 {parentComponent === "explore" && (
                   <button className="btn btn-success" onClick={handleAddBid}>
                     Add Bid

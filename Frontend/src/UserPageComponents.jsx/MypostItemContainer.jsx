@@ -58,7 +58,7 @@ function MyPostItemContainer(props) {
     <>
       <div className="d-flex flex-wrap bg-white h-50 border p-3">
         <h3 className="fs-4">{props.division}</h3>
-        <div className="w-100 d-flex flex-row justify-content-between align-items-center">
+        <div className="item-container w-100 d-flex flex-row justify-content-between align-items-center">
           <div className="d-flex flex-row overflow-hidden">
             <div className="d-flex flex-row w-100">
               {testData.map((item) => (
@@ -76,7 +76,9 @@ function MyPostItemContainer(props) {
               ))}
             </div>
           </div>
-          <SeeAllBtn navigateTo={props.navigateTo} />
+          <div className="see-all-btn d-flex justify-content-center align-items-center">
+            <SeeAllBtn navigateTo={props.navigateTo} />
+          </div>
         </div>
       </div>
     </>

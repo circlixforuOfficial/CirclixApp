@@ -5,7 +5,7 @@ function ServicesSection() {
     <>
       <div>
         <div className="container px-5 py-5" id="featured-3">
-        <h2 className="display-4">Services</h2>
+        <h2 id="scrollspyHeading3" className="display-4">Services</h2>
         <div className="d-flex flex-sm-column flex-lg-row">
   
           {/*service detail cards*/}
