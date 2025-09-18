@@ -55,7 +55,7 @@ function BidsForMeContainer(props) {
       <div className="d-flex flex-wrap bg-white h-50 border rounded-top-4 p-3">
         <h3 className="fs-4">{props.division}</h3>
         <div className="item-container w-100 d-flex flex-row justify-content-between align-items-center">
-          <div className="d-flex flex-row overflow-hidden">
+          <div className="d-flex flex-row pt-2">
             <div className="d-flex flex-row w-100">
               {testData.map((item) => (
                 <ItemCardSmall

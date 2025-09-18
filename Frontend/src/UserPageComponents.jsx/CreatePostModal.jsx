@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import axios from "axios";
 import plus from "../assets/plus-circle.svg";
 
-function CreatePostModal(props) {
+function CreatePostModal() {
   const [formData, setFormData] = useState({
     startDate: "",
     endDate: "",
@@ -42,17 +42,6 @@ function CreatePostModal(props) {
       return;
     }
 
-    const payload = new FormData();
-    payload.append("startDate", startDate);
-    payload.append("endDate", endDate);
-    payload.append("startTime", startTime);
-    payload.append("endTime", endTime);
-    payload.append("bidLimit", bidLimit);
-    payload.append("itemType", itemType);
-    payload.append("description", description);
-    payload.append("image1", image1);
-    payload.append("image2", image2);
-
     try {
       if (
         !startDate ||
@@ -68,7 +57,20 @@ function CreatePostModal(props) {
         alert("Please fill in all fields.");
         return;
       }
-      await axios.post("http://localhost:8081/api/v1/post/CreatePost", payload);
+      
+      const data = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        data.append(key, value);
+      });
+
+      await axios.post("http://localhost:8081/api/v1/post/CreatePost", data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       alert("Post created successfully!");
     } catch (error) {
       console.error("Error creating post:", error);

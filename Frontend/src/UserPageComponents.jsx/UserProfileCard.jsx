@@ -1,7 +1,7 @@
 import React from "react";
 import EditProfile from "./EditProfile";
 import DeleteProfile from "./DeleteProfile";
-import ApiImage from "../component/ApiImage";
+import avatar from '../assets/profilePic.jpeg';
 
 function UserProfileCard(props) {
   const userFullName = props.fName + " " + props.lName;
@@ -11,10 +11,13 @@ function UserProfileCard(props) {
       <div className="card rounded-4 d-flex justify-content-center max-vh-75 flex-lg-column flex-sm-row col-lg-2 me-1">
         <div className="w-100 d-flex justify-content-center align-items-center">
           <div
-            className="m-3 rounded-circle shadow-lg overflow-hidden"
+            className="d-flex justify-content-center align-items-center border-0 m-3 rounded-circle shadow-lg overflow-hidden"
             style={{ width: "120px", height: "120px" }}
           >
-            <img src={props.userImg} alt="" width="120px" height="120px" />
+            {props.userImg ?
+              <img src={props.userImg} className="border-0" alt="User Avatar" width="122px" height="122px" />:
+              <img src={avatar} className="border-0" alt="User Avatar" width="122px" height="122px" />
+            }
           </div>
         </div>
         <div className="card-body d-flex flex-column justify-content-center col-lg-12 col-sm-6">
