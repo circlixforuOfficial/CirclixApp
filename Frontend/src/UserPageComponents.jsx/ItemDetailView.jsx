@@ -1,6 +1,7 @@
 import React from "react";
 
-import arrow from "../assets/arrow-right-circle.svg";
+import img1 from "../assets/online-sell.jpg";
+import img2 from "../assets/product-art.jpg";
 import axios from "axios";
 
 function ItemDetailView(props) {
@@ -74,61 +75,125 @@ function ItemDetailView(props) {
           <div className="d-flex ps-5 pt-4 flex-column border-top">
             <h2 className="fs-2 ms-1">Item Details</h2>
           </div>
-          <div className="d-flex flex-row py-4 px-5 w-100 vh-100 border rounded-4">
+          <div className="d-flex flex-lg-row flex-sm-column align-items-center gap-5 justify-content-center py-5 px-5 w-100 border rounded-4">
             <div className="col">
-              <div className="d-flex justify-content-evenly flex-sm-column flex-lg-row">
-                <img
-                  src={arrow}
-                  className="my-3"
-                  alt="Item image 1"
-                  style={{ width: "170px" }}
-                />
-                <img
-                  src={arrow}
-                  className="my-3"
-                  alt="Item image 1"
-                  style={{ width: "170px" }}
-                />
+              <div className="d-flex justify-content-center">
+                {/*carousel start*/}
+                <div
+                  id="carouselExampleFade"
+                  class="carousel slide carousel-fade"
+                  style={{ height: "180px" }}
+                >
+                  <div class="carousel-inner d-flex align-items-center">
+                    <div class="d-flex justify-content-center align-items-center carousel-item active">
+                      <img
+                        src={img1}
+                        className="my-3"
+                        alt="Item image 1"
+                        style={{ height: "160px" }}
+                      />
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center carousel-item active">
+                      <img
+                        src={img2}
+                        className="my-3"
+                        alt="Item image 1"
+                        style={{ height: "160px" }}
+                      />
+                    </div>
+                  </div>
+                  <button
+                    class="carousel-control-prev bg-success"
+                    type="button"
+                    data-bs-target="#carouselExampleFade"
+                    data-bs-slide="prev"
+                  >
+                    <span
+                      class="carousel-control-prev-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button
+                    class="carousel-control-next bg-success"
+                    type="button"
+                    data-bs-target="#carouselExampleFade"
+                    data-bs-slide="next"
+                  >
+                    <span
+                      class="carousel-control-next-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
+                {/*carousel end*/}
               </div>
             </div>
-            <div className="col">
-              <div className="d-flex flex-column">
+            <div className="col d-flex flex-column justify-content-center">
+              <div className="d-flex flex-column justify-content-center">
                 {itemId ? (
-                  <ul className="list-group list-group-flush  d-flex flex-wrap justify-content-center border-0">
-                  {[
-                    { label: "Item Name", itemValue: itemName },
-                    { label: "Category", itemValue: category },
-                    { label: "Description", itemValue: description },
-                    { label: "Bid limit", itemValue: bidLimit },
-                    { label: "Bid Status", itemValue: status },
-                    { label: "Bid start Date", itemValue: startDate },
-                    { label: "Bid start Time", itemValue: startTime },
-                    { label: "Bid end Date", itemValue: endDate },
-                    { label: "Bid end Time", itemValue: endTime },
-                  ].map(({ label, itemValue }) => (
-                    <div className="d-flex flex-row" key={label}>
-                      <li
-                        className="list-group-item text-start border-0"
-                        style={{ width: "160px" }}
-                      >
-                        {label}
-                      </li>
-                      <li
-                        className="list-group-item text-start border-0"
-                        style={{ width: "200px" }}
-                      >
-                        {": "}{itemValue}
-                      </li>
-                    </div>
-                  ))}
-                </ul>
-        ) : (
-          <p className="text-danger mt-3">Item not found.</p>
-        )}
-                
+                  <>
+                    <ul className="list-group list-group-flush d-flex flex-wrap justify-content-center border-0">
+                      {[
+                        { label: "Item Name", itemValue: itemName },
+                        { label: "Category", itemValue: category },
+                        { label: "Description", itemValue: description },
+                        { label: "Bid limit", itemValue: bidLimit },
+                        { label: "Bid Status", itemValue: status },
+                        { label: "Bid start Date", itemValue: startDate },
+                        { label: "Bid start Time", itemValue: startTime },
+                        { label: "Bid end Date", itemValue: endDate },
+                        { label: "Bid end Time", itemValue: endTime },
+                      ].map(({ label, itemValue }) => (
+                        <div className="d-flex flex-row" key={label}>
+                          <li
+                            className="list-group-item text-start border-0"
+                            style={{ width: "160px" }}
+                          >
+                            {label}
+                          </li>
+                          <li
+                            className="list-group-item text-start border-0"
+                            style={{ width: "200px" }}
+                          >
+                            {": "}
+                            {itemValue}
+                          </li>
+                        </div>
+                      ))}
+                    </ul>
+                    <br />
+                    <ul className="list-group list-group-flush d-flex flex-wrap justify-content-center border-0">
+                      {[
+                        { label: "Owner Name", itemValue: itemName },
+                        { label: "Tp number", itemValue: category },
+                        { label: "Rating", itemValue: description },
+                      ].map(({ label, itemValue }) => (
+                        <div className="d-flex flex-row" key={label}>
+                          <li
+                            className="list-group-item text-start border-0"
+                            style={{ width: "160px" }}
+                          >
+                            {label}
+                          </li>
+                          <li
+                            className="list-group-item text-start border-0"
+                            style={{ width: "200px" }}
+                          >
+                            {": "}
+                            {itemValue}
+                          </li>
+                        </div>
+                      ))}
+                    </ul>
+                  </>
+                ) : (
+                  <p className="text-danger mt-3">Item not found.</p>
+                )}
               </div>
               {/* Action Buttons */}
-              <div className="mt-4 d-flex gap-3 justify-content-center">
+              <div className="mt-4 d-flex gap-3">
                 {parentComponent === "mypost" && (
                   <>
                     <button
@@ -147,34 +212,49 @@ function ItemDetailView(props) {
                 )}
                 {parentComponent === "bids" && (
                   <>
-                  <button
+                    <button
                       className="btn btn-warning"
                       onClick={handleEditPost}
                     >
                       Edit bid
                     </button>
-                  <button
-                    className="btn btn-outline-danger"
-                    onClick={handleCancelBid}
-                  >
-                    Cancel Bid
-                  </button>
+                    <button
+                      className="btn btn-outline-danger"
+                      onClick={handleCancelBid}
+                    >
+                      Cancel Bid
+                    </button>
                   </>
                 )}
                 {parentComponent === "bidsforme" && (
                   <>
-                  <button
-                      className="btn btn-warning"
-                      onClick={handleEditPost}
-                    >
-                      Edit bid
-                    </button>
-                  <button
-                    className="btn btn-outline-danger"
-                    onClick={handleCancelBid}
-                  >
-                    Cancel Bid
-                  </button>
+                    {itemId ? (
+                      <ul className="list-group list-group-flush d-flex flex-wrap justify-content-center border-0">
+                        {[
+                          { label: "Bid amount", itemValue: bidLimit },
+                          { label: "Bid placed date", itemValue: startDate },
+                          { label: "Bid Placed time", itemValue: startTime },
+                        ].map(({ label, itemValue }) => (
+                          <div className="d-flex flex-row" key={label}>
+                            <li
+                              className="list-group-item text-start border-0"
+                              style={{ width: "160px" }}
+                            >
+                              {label}
+                            </li>
+                            <li
+                              className="list-group-item text-start border-0"
+                              style={{ width: "200px" }}
+                            >
+                              {": "}
+                              {itemValue}
+                            </li>
+                          </div>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-danger mt-3">Item not found.</p>
+                    )}
                   </>
                 )}
                 {parentComponent === "explore" && (
@@ -192,93 +272,3 @@ function ItemDetailView(props) {
 }
 
 export default ItemDetailView;
-
-{
-  /*
-  {[
-                { label: "Item Name", itemValue: "itemName" },
-                { label: "Category", itemValue: "category" },
-                { label: "Description", itemValue: "description" },
-                { label: "Bid limit", itemValue: "bidLimit" },
-                { label: "Bid Status", itemValue: "status" },
-                { label: "Bid start Date", itemValue: "startDate"},
-                { label: "Bid start Time", itemValue: "startTime" },
-                { label: "Bid end Date", itemValue: "endDate"},
-                { label: "Bid end Time", itemValue: "endTime" },
-              ].map(({ label, itemValue}) => (
-                <div className="d-flex flex-row" key={label}>
-                  <li className="list-group-item text-start border-0" style={{width:"200px"}}>
-                    {label}
-                  </li>
-                  <li className="list-group-item text-start border-0" style={{width:"200px"}}>
-                    {itemValue}
-                  </li>
-                </div>
-              ))}
-
-              <ul className="list-group list-group-flush  d-flex flex-wrap justify-content-center border-0">
-                  <li className="list-group-item text-start border-0">
-                    Item Name
-                  </li>
-                  <li className="list-group-item  text-start border-0">
-                    Category
-                  </li>
-                  <li className="list-group-item  text-start border-0">
-                    Description
-                  </li>
-                  <li className="list-group-item  text-start border-0">
-                    Bid limit
-                  </li>
-                  <li className="list-group-item  text-start border-0">
-                    Bid Status
-                  </li>
-                  <li className="list-group-item  text-start border-0">
-                    Bid start Date
-                  </li>
-                  <li className="list-group-item  text-start border-0">
-                    Bid start Time
-                  </li>
-                  <li className="list-group-item  text-start border-0">
-                    Bid End Date
-                  </li>
-                  <li className="list-group-item  text-start border-0">
-                    Bid End Time
-                  </li>
-                </ul>
-                <ul className="list-group list-group-flush  d-flex flex-wrap justify-content-center border-0">
-                  <li className="list-group-item text-start border-0">
-                    {": "}
-                    {itemName}
-                  </li>
-                  <li className="list-group-item  text-start border-0">
-                    {": "}
-                    {category}
-                  </li>
-                  <li className="list-group-item  text-start border-0">
-                    {": "}
-                    {description}
-                  </li>
-                  <li className="list-group-item  text-start border-0">
-                    {": "}
-                    {bidLimit}
-                  </li>
-                  <li className="list-group-item  text-start border-0">
-                    {": "} {status}
-                  </li>
-                  <li className="list-group-item  text-start border-0">
-                    {": "} {startDate}
-                  </li>
-                  <li className="list-group-item  text-start border-0">
-                    {": "}
-                    {startTime}
-                  </li>
-                  <li className="list-group-item  text-start border-0">
-                    {": "} {endDate}
-                  </li>
-                  <li className="list-group-item  text-start border-0">
-                    {": "} {endTime}
-                  </li>
-                </ul>
-  
-  */
-}

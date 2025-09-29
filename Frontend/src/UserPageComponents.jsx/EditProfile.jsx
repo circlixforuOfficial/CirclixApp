@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function EditProfile() {
+function EditProfile(props) {
   const [userData, setUserData] = useState({
     firstName: props.fName,
     lastName: props.lName,
@@ -16,13 +16,13 @@ function EditProfile() {
 
   const [userImgPreview, setUserImgPreview] = useState(null);
 
-  // Fetch user data and image separately
   useEffect(() => {
     if (props.userImg) {
       console.log(userData.firstName)
       console.log(userData);
       setUserImgPreview(props.userImg);
     }
+
   }, [props.userImg]);
 
   const handleChange = (e) => {
@@ -41,6 +41,7 @@ function EditProfile() {
   const handleSubmit = async () => {
     try {
       const token = localStorage.getItem("token");
+      console.log(userData)
       const formData = new FormData();
 
       for (const key in userData) {
@@ -51,7 +52,7 @@ function EditProfile() {
         }
       }
 
-      await axios.patch(
+      await axios.put(
         `http://localhost:8080/api/v1/user/update-user/${userData.userId}`,
         formData,
         {

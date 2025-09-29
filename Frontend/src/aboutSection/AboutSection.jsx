@@ -14,7 +14,7 @@ function AboutSection() {
           </div>
           <div className="d-flex mx-5 py-4 flex-wrap justify-content-center">
             <img
-              src="src\assets\digital-products.png"
+              src="src\assets\cs-students.png"
               style={{ width: "200px" }}
             ></img>
           </div>

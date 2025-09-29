@@ -22,8 +22,8 @@ function ServicesSection() {
             </div>
             <div className="d-flex mx-3 py-4 flex-wrap justify-content-center">
               <img
-                src="src\assets\digital-products.png"
-                style={{ width: "160px" }}
+                src="src\assets\bidding-system.png"
+                style={{ width: "160px",height:"170px" }}
               ></img>
             </div>
           </div>
@@ -41,8 +41,8 @@ function ServicesSection() {
             </div>
             <div className="d-flex mx-3 py-4 flex-wrap justify-content-center">
               <img
-                src="src\assets\digital-products.png"
-                style={{ width: "160px" }}
+                src="src\assets\security-authentication.png"
+                style={{ width: "160px",height:"170px" }}
               ></img>
             </div>
           </div>
@@ -50,18 +50,18 @@ function ServicesSection() {
           <div className="m-5 p-3 d-flex flex-sm-row flex-lg-column shadow-lg">
             <div className="px-3">
               <h3 className="fs-2 text-body-emphasis text-center">
-                Use Profile & Insights
+                Clear Item Details
               </h3>
               <ul>
-                <li>Customizable user dashboards.</li>
-                <li>Purchase & sale history.</li>
-                <li>Engagement metrics and activity logs.</li>
+                <li>User posted item, bids placed info.</li>
+                <li>Real time date-time detail updating.</li>
+                <li>Item status update.</li>
               </ul>
             </div>
             <div className="d-flex mx-3 py-4 flex-wrap justify-content-center">
               <img
-                src="src\assets\digital-products.png"
-                style={{ width: "160px" }}
+                src="src\assets\details.png"
+                style={{ width: "160px",height:"170px" }}
               ></img>
             </div>
           </div>

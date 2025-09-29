@@ -1,7 +1,7 @@
 import { React, useRef, useEffect, useState } from "react";
 
 import ItemsDetailModal from "./ItemsDetailModal";
-import arrow from "../assets/arrow-right-circle.svg";
+import arrow from "../assets/digital-products.png";
 
 function ItemCardSmall(props) {
 
