@@ -17,13 +17,23 @@ function EditProfile(props) {
   const [userImgPreview, setUserImgPreview] = useState(null);
 
   useEffect(() => {
+    setUserData({
+      firstName: props.fName || "",
+      lastName: props.lName || "",
+      DOB: props.dob || "",
+      tpNumber: props.tpNumber || "",
+      password: props.password || "",
+      email: props.email || "",
+      nic: props.nic || "",
+      address: props.address || "",
+      image: props.userImg || null,
+    });
+
     if (props.userImg) {
-      console.log(userData.firstName)
-      console.log(userData);
       setUserImgPreview(props.userImg);
     }
+  }, [props]);
 
-  }, [props.userImg]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -41,7 +51,8 @@ function EditProfile(props) {
   const handleSubmit = async () => {
     try {
       const token = localStorage.getItem("token");
-      console.log(userData)
+      console.log(userData);
+      console.log(token);
       const formData = new FormData();
 
       for (const key in userData) {
@@ -52,8 +63,8 @@ function EditProfile(props) {
         }
       }
 
-      await axios.put(
-        `http://localhost:8080/api/v1/user/update-user/${userData.userId}`,
+      await axios.patch(
+        `http://localhost:8080/api/v1/user/update-user/${props.userId}`,
         formData,
         {
           headers: {

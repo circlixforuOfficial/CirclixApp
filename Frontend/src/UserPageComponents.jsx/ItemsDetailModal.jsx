@@ -2,20 +2,24 @@ import { React, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import arrow from "../assets/arrow-right-circle.svg";
 
+import ApiImage from "../component/ApiImage.jsx";
+
 function ItemsDetailModal(props) {
   const {
     itemId,
-    itemName,
     category,
     description,
     bidLimit,
     endDate,
     endTime,
+    startDate,
+    startTime,
+    image1,
+    image2,
     parent,
   } = props;
 
   useEffect(() => {
-      //console.log(parent);
     }, []);
 
   const navigate = useNavigate();
@@ -29,7 +33,7 @@ function ItemsDetailModal(props) {
     const Id = itemId; // use the actual prop value
     navigate(`/details/${parent}/${Id}`);
     window.location.reload();
-    
+
   };
   
 
@@ -59,7 +63,7 @@ function ItemsDetailModal(props) {
                   className="modal-title fs-4"
                   id="exampleModalFullscreenSmLabel"
                 >
-                  {itemName}
+                  {description}
                 </h1>
                 <button
                   type="button"
@@ -70,23 +74,15 @@ function ItemsDetailModal(props) {
               </div>
               <div className="modal-body d-flex flex-wrap justify-content-evenly">
                 <div>
-                  <img
-                    src={arrow}
-                    style={{ width: "90px" }}
-                    className="card-img-top"
-                    alt="..."
-                  />
+                  <ApiImage apiUrl={image1} width="130" height="130"/>
                 </div>
                 <div className="d-flex ">
                   <ul className="list-group list-group-flush  d-flex flex-wrap justify-content-center border-0">
-                    <li className="list-group-item text-start border-0">
-                      Item Name
+                    <li className="list-group-item  text-start border-0">
+                      Description
                     </li>
                     <li className="list-group-item  text-start border-0">
                       Category
-                    </li>
-                    <li className="list-group-item  text-start border-0">
-                      Description
                     </li>
                     <li className="list-group-item  text-start border-0">
                       Bid limit
@@ -96,17 +92,13 @@ function ItemsDetailModal(props) {
                     </li>
                   </ul>
                   <ul className="list-group list-group-flush  d-flex flex-wrap justify-content-center border-0">
-                    <li className="list-group-item text-start border-0">
+                    <li className="list-group-item  text-start border-0">
                       {": "}
-                      {itemName}
+                      {description}
                     </li>
                     <li className="list-group-item  text-start border-0">
                       {": "}
                       {category}
-                    </li>
-                    <li className="list-group-item  text-start border-0">
-                      {": "}
-                      {description}
                     </li>
                     <li className="list-group-item  text-start border-0">
                       {": "}

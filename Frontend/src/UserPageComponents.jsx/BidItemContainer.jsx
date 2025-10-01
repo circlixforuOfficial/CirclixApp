@@ -4,76 +4,7 @@ import ItemCardSmall from "./ItemCardSmall";
 import SeeAllBtn from "../component/SeeAllBtn";
 
 function BidItemContainer(props) {
-  const testData = [
-    {
-      itemId: "1",
-      itemName: "Laptop",
-      category: "Electronics",
-      description: "High-end gaming laptop",
-      bidLimit: "5000",
-      startDate: "2025-12-31",
-      startTime: "23:59",
-      endDate: "2025-12-31",
-      endTime: "23:59",
-    },
-    {
-      itemId: "2",
-      itemName: "Chair",
-      category: "Furniture",
-      description: "Ergonomic office chair",
-      bidLimit: "1500",
-      startDate: "2025-12-31",
-      startTime: "23:59",
-      endDate: "2025-11-30",
-      endTime: "18:00",
-    },
-    {
-      itemId: "8",
-      itemName: "Laptop",
-      category: "Electronics",
-      description: "High-end gaming laptop",
-      bidLimit: "5000",
-      startDate: "2025-12-31",
-      startTime: "23:59",
-      endDate: "2025-12-31",
-      endTime: "23:59",
-    },
-    {
-      itemId: "9",
-      itemName: "Chair",
-      category: "Furniture",
-      description: "Ergonomic office chair",
-      bidLimit: "1500",
-      startDate: "2025-12-31",
-      startTime: "23:59",
-      endDate: "2025-11-30",
-      endTime: "18:00",
-    },
-    {
-      itemId: "10",
-      itemName: "Laptop",
-      category: "Electronics",
-      description: "High-end gaming laptop",
-      bidLimit: "5000",
-      startDate: "2025-12-31",
-      startTime: "23:59",
-      endDate: "2025-12-31",
-      endTime: "23:59",
-    },
-    {
-      itemId: "11",
-      itemName: "Chair",
-      category: "Furniture",
-      description: "Ergonomic office chair",
-      bidLimit: "1500",
-      startDate: "2025-12-31",
-      startTime: "23:59",
-      endDate: "2025-11-30",
-      endTime: "18:00",
-    },
-  ];
-
-  const [bidData, setBidData] = useState();
+  const [bidData, setBidData] = useState([]);
 
   {
     /*Fetch bid data */
@@ -81,13 +12,13 @@ function BidItemContainer(props) {
   const fetchBidData = async () => {
     try {
       const token = localStorage.getItem("token");
-      const { data } = await axios.get(
-        "http://localhost:8080/api/v1/user/profile",
+      const response = await axios.get(
+        "http://localhost:8087/api/v1/bid/getMyBids",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      setBidData(data);
+      setBidData(response.data);
     } catch (err) {
       console.error("Failed to fetch bid data:", err);
     }
@@ -104,17 +35,21 @@ function BidItemContainer(props) {
         <div className="item-container w-100 d-flex flex-row justify-content-between align-items-center">
           <div className="d-flex flex-row pt-2">
             <div className="d-flex flex-row w-100">
-              {testData.map((item) => (
+              {bidData.map((item) => (
                 <ItemCardSmall
-                  key={item.itemId}
-                  itemId={item.itemId}
-                  itemName={item.itemName}
-                  category={item.category}
+                  key={"bid" + item.postID}
+                  itemId={item.postID}
+                  category={item.itemType} 
                   description={item.description}
                   bidLimit={item.bidLimit}
+                  startDate={item.startDate}
+                  startTime={item.startTime}
                   endDate={item.endDate}
                   endTime={item.endTime}
-                  parentType="bids" 
+                  image1={item.image1Url}
+                  image2={item.image2Url}
+                  user={item.user}
+                  parentType="bids"
                 />
               ))}
             </div>

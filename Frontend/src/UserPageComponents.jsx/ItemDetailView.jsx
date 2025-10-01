@@ -81,50 +81,50 @@ function ItemDetailView(props) {
                 {/*carousel start*/}
                 <div
                   id="carouselExampleFade"
-                  class="carousel slide carousel-fade"
-                  style={{ height: "180px" }}
+                  className="carousel slide carousel-fade"
+                  style={{ height: "230px" }}
                 >
-                  <div class="carousel-inner d-flex align-items-center">
-                    <div class="d-flex justify-content-center align-items-center carousel-item active">
+                  <div className="carousel-inner d-flex align-items-center">
+                    <div className="d-flex justify-content-center align-items-center carousel-item active">
                       <img
                         src={img1}
                         className="my-3"
                         alt="Item image 1"
-                        style={{ height: "160px" }}
+                        style={{ height: "200px" }}
                       />
                     </div>
-                    <div class="d-flex justify-content-center align-items-center carousel-item active">
+                    <div className="d-flex justify-content-center align-items-center carousel-item active">
                       <img
                         src={img2}
                         className="my-3"
                         alt="Item image 1"
-                        style={{ height: "160px" }}
+                        style={{ height: "200px" }}
                       />
                     </div>
                   </div>
                   <button
-                    class="carousel-control-prev bg-success"
+                    className="carousel-control-prev bg-success"
                     type="button"
                     data-bs-target="#carouselExampleFade"
                     data-bs-slide="prev"
                   >
                     <span
-                      class="carousel-control-prev-icon"
+                      className="carousel-control-prev-icon"
                       aria-hidden="true"
                     ></span>
-                    <span class="visually-hidden">Previous</span>
+                    <span className="visually-hidden">Previous</span>
                   </button>
                   <button
-                    class="carousel-control-next bg-success"
+                    className="carousel-control-next bg-success"
                     type="button"
                     data-bs-target="#carouselExampleFade"
                     data-bs-slide="next"
                   >
                     <span
-                      class="carousel-control-next-icon"
+                      className="carousel-control-next-icon"
                       aria-hidden="true"
                     ></span>
-                    <span class="visually-hidden">Next</span>
+                    <span className="visually-hidden">Next</span>
                   </button>
                 </div>
                 {/*carousel end*/}

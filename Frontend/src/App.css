@@ -49,6 +49,7 @@ body{
 
 .item-container{
   position: relative;
+  height: 202px;
 }
 
 .see-all-btn{

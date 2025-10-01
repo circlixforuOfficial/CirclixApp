@@ -18,7 +18,7 @@ function RegisterInput(props) {
           onChange={sendData}
           value={props.value}
         />
-        <label for={props.inputId} className="py-2">
+        <label htmlFor={props.inputId} className="py-2">
           {props.labelText}
         </label>
       </div>

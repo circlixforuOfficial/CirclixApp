@@ -4,32 +4,7 @@ import ItemCardSmall from "./ItemCardSmall";
 import SeeAllBtn from "../component/SeeAllBtn";
 
 function MyPostItemContainer(props) {
-  const [myPostsData, setMyPostsData] = useState();
-
-  const testData = [
-    {
-      itemId: "3",
-      itemName: "Laptop",
-      category: "Electronics",
-      description: "High-end gaming laptop",
-      bidLimit: "5000",
-      startDate: "2025-12-31",
-      startTime: "23:59",
-      endDate: "2025-12-31",
-      endTime: "23:59",
-    },
-    {
-      itemId: "4",
-      itemName: "Chair",
-      category: "Furniture",
-      description: "Ergonomic office chair",
-      bidLimit: "1500",
-      startDate: "2025-12-31",
-      startTime: "23:59",
-      endDate: "2025-11-30",
-      endTime: "18:00",
-    },
-  ];
+  const [myPostsData, setMyPostsData] = useState([]);
 
   {
     /*Feetch My post data */
@@ -37,21 +12,23 @@ function MyPostItemContainer(props) {
   const fetchMyPostsData = async () => {
     try {
       const token = localStorage.getItem("token");
-      const { data } = await axios.get(
-        "http://localhost:8080/api/v1/user/profile",
+      const response = await axios.get(
+        "http://localhost:8081/api/v1/post/getMyPosts",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      setMyPostsData(data);
+      const info=response.data;
+      console.log(info);
+      setMyPostsData(info);
+
     } catch (err) {
       console.error("Failed to fetch my posts data:", err);
     }
   };
 
   useEffect(() => {
-      //fetchMyPostsData();
-      setMyPostsData(testData);
+      fetchMyPostsData();
     }, []);
 
   return (
@@ -59,18 +36,22 @@ function MyPostItemContainer(props) {
       <div className="d-flex flex-wrap bg-white h-50 border p-3">
         <h3 className="fs-4">{props.division}</h3>
         <div className="item-container w-100 d-flex flex-row justify-content-between align-items-center">
-          <div className="d-flex flex-row pt-2 ">
+          <div className="d-flex flex-row pt-2">
             <div className="d-flex flex-row w-100">
-              {testData.map((item) => (
+              {myPostsData.map((item) => (
                 <ItemCardSmall
-                  key={item.itemId}
-                  itemId={item.itemId}
-                  itemName={item.itemName}
-                  category={item.category}
+                  key={"myPost"+item.postID}
+                  itemId={item.postID}
+                  category={item.itemType}
                   description={item.description}
                   bidLimit={item.bidLimit}
+                  startDate={item.startDate}
+                  startTime={item.startTime}
                   endDate={item.endDate}
                   endTime={item.endTime}
+                  image1={item.image1Url}
+                  image2={item.image2Url}
+                  user={item.user}
                   parentType="mypost"
                 />
               ))}

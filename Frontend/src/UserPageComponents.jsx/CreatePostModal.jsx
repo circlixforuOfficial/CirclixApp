@@ -57,21 +57,20 @@ function CreatePostModal() {
         alert("Please fill in all fields.");
         return;
       }
-      
-      const data = new FormData();
-      Object.entries(formData).forEach(([key, value]) => {
-        data.append(key, value);
-      });
 
-      await axios.post("http://localhost:8081/api/v1/post/CreatePost", data,
+      const token = localStorage.getItem("token");
+      console.log(token);
+      console.log(formData);
+      console.log(data);
+      await axios.post(`http://localhost:8081/api/v1/post/CreatePost`, formData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
           },
         }
       );
       alert("Post created successfully!");
+      console.log(formData);
     } catch (error) {
       console.error("Error creating post:", error);
       alert("Failed to create post.");
