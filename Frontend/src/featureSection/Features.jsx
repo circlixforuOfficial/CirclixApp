@@ -7,6 +7,7 @@ import time from "./Icons/stopwatch.svg";
 import laptop from "./Icons/laptop.svg";
 import security from "./Icons/icons8-cloud-firewall-48.png";
 import taskCompletion from "./Icons/clipboard2-check-fill.svg";
+import bidIcon from "./Icons/bidicon.png"
 
 function Features() {
   return (
@@ -55,6 +56,13 @@ function Features() {
               description="Users can list items for sale or bidding in seconds using a
           streamlined form and drag and-drop image upload. Circlix
           auto-categorizes items to optimize discovery."
+            />
+            <FeatureCard
+              source={bidIcon}
+              altText="bid img"
+              heading="Smart Bidding System"
+              description="The platform offers a secure and transparent bidding process where users can place valid bids, 
+              track activity in real time, and ensure fairness. Duplicate or invalid bids are prevented, making the auction simple, reliable, and user-friendly."
             />
           </div>
         </div>
