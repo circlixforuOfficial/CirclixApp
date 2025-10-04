@@ -19,13 +19,13 @@ public class RatingController {
     @Autowired
     private HttpServletRequest httpServletRequest;
 
-    @PostMapping("/ratethisPost/{postID}")
+    @PostMapping("/rating/{postID}")
     public ResponseEntity<String> ratingPosts(Authentication auth, @PathVariable("postID")int postID, @RequestBody RatingDTO ratingDTO){
         String userNIC=auth.getName();
         String authHeader = httpServletRequest.getHeader("Authorization");
         try{
             ratingService.giveRatesForPosts(userNIC,postID,ratingDTO,authHeader);
-            return ResponseEntity.ok("Thanks for your Rating!");
+            return ResponseEntity.ok("Rating saved");
         }catch(Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Rating Upload failed: " + e.getMessage());

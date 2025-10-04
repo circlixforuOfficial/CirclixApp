@@ -19,8 +19,8 @@ public class DeleteBidService {
         BidInformation bid = bidRepo.findById(bidID)
                 .orElseThrow(() -> new RuntimeException("Bid not found"));
 
-        if (!bid.getPostOwnerNIC().equals(userNIC)) {
-            throw new RuntimeException("You can delete your own bids only!");
+        if (bid.getPostOwnerNIC().equals(userNIC)) {
+            throw new RuntimeException("You are able delete only your own bids!");
         }
 
         bidRepo.deleteById(bidID);
