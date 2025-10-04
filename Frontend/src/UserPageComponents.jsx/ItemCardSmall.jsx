@@ -33,12 +33,12 @@ function ItemCardSmall(props) {
     <>
       <div
         className="card border-0 shadow-lg p-1 pb-0 me-2 mb-2"
-        style={{ width: "170px", height: "185px", minWidth: "165px" }}
+        style={{ width: "140px", height: "185px", minWidth: "130px" }}
       >
         <div className="d-flex justify-content-center justify-content-center mt-1">
           {imageSrc?<img
             src={imageSrc}
-            style={{ width: "110px" }}
+            style={{ width: "110px",maxHeight:"95px" }}
             className="card-img-top"
             alt="..."
           />:<img

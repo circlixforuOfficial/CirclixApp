@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import {  useState, useEffect } from "react";
 import axios from "axios";
 import ItemCardSmall from "./ItemCardSmall";
 import SeeAllBtn from "../component/SeeAllBtn";
@@ -19,7 +19,6 @@ function MyPostItemContainer(props) {
         }
       );
       const info=response.data;
-      console.log(info);
       setMyPostsData(info);
 
     } catch (err) {
@@ -55,6 +54,13 @@ function MyPostItemContainer(props) {
                   parentType="mypost"
                 />
               ))}
+            </div>
+            <div className="row">
+              {myPostsData.length === 0 ? (
+                <h5 className="text-danger">Items not found</h5>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
           <div className="see-all-btn d-flex justify-content-center align-items-center">

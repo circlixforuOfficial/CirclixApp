@@ -51,8 +51,6 @@ function EditProfile(props) {
   const handleSubmit = async () => {
     try {
       const token = localStorage.getItem("token");
-      console.log(userData);
-      console.log(token);
       const formData = new FormData();
 
       for (const key in userData) {

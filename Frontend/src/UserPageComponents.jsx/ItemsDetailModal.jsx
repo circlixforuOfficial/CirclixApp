@@ -1,6 +1,5 @@
 import { React, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import arrow from "../assets/arrow-right-circle.svg";
 
 import ApiImage from "../component/ApiImage.jsx";
 
@@ -24,7 +23,8 @@ function ItemsDetailModal(props) {
 
   const navigate = useNavigate();
 
-  const target = "#" + itemId;
+  const target = "#" + parent+itemId;
+  const modelId=parent+itemId;
   const expiration = new Date(`${endDate}T${endTime}`);
   const now = new Date();
   const status = now > expiration ? "Expired" : "Active";
@@ -51,7 +51,7 @@ function ItemsDetailModal(props) {
 
         <div
           className="modal fade"
-          id={itemId}
+          id={modelId}
           tabIndex="-1"
           aria-labelledby="exampleModalFullscreenSmLabel"
           role="dialog"

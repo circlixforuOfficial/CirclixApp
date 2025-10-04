@@ -10,7 +10,6 @@ function ExploreView(props) {
   const queryParams = new URLSearchParams(location.search);
   const keywordFromURL = queryParams.get("keyword") || "";
 
-
   const [searchKeyword, setSearchKeyword] = useState(keywordFromURL);
   const [exploreData, setExploreData] = useState([]);
 
@@ -20,15 +19,21 @@ function ExploreView(props) {
   const fetchExploreData = async () => {
     try {
       const token = localStorage.getItem("token");
-      console.log(token);
-      
-      const response= await axios.get("http://localhost:8081/api/v1/post/publicWall", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      let response;
 
-      console.log(response.data);
-      setExploreData(response.data)
+      if (keywordFromURL.trim()) {
+        response = await axios.get(
+          `http://localhost:8081/api/v1/post/item_Type?type=${encodeURIComponent(keywordFromURL.trim())}`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+      } else {
+        response = await axios.get(
+          "http://localhost:8081/api/v1/post/publicWall",
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+      }
 
+      setExploreData(response.data);
     } catch (err) {
       console.error("Failed to fetch explore data:", err);
     }
@@ -37,7 +42,6 @@ function ExploreView(props) {
   const handleSearch = (e) => {
     e.preventDefault(); // prevent form default submission
     if (searchKeyword.trim()) {
-      console.log(searchKeyword);
       navigate(`/explore?keyword=${encodeURIComponent(searchKeyword.trim())}`);
     }
     window.location.reload();
@@ -55,7 +59,7 @@ function ExploreView(props) {
             <h2 className="fs-2 ms-1">Explore</h2>
             <form
               className="d-flex flex-row justify-content-center"
-              onSubmit={fetchExploreData}
+              onSubmit={handleSearch}
             >
               <input
                 className="form-control w-50"
@@ -69,20 +73,31 @@ function ExploreView(props) {
               </button>
             </form>
           </div>
-          <div className="d-flex flex-wrap py-4 px-5 w-100 vh-100 border rounded-4">
-            {exploreData.map((item) => (
-              <ItemCardSmall
-                key={item.itemId}
-                itemId={item.itemId}
-                itemName={item.itemName}
-                category={item.category}
-                description={item.description}
-                bidLimit={item.bidLimit}
-                endDate={item.endDate}
-                endTime={item.endTime}
-                parentType="explore"
-              />
-            ))}
+          <div className="d-flex flex-wrap py-4 px-3 w-100 vh-100 border rounded-4">
+            <div className="container py-3 px-0">
+              <div className="row">
+                {exploreData.map((item) => (
+                  <ItemCardSmall
+                    key={"explore" + item.postID}
+                    itemId={item.postID}
+                    category={item.itemType}
+                    description={item.description}
+                    bidLimit={item.bidLimit}
+                    startDate={item.startDate}
+                    startTime={item.startTime}
+                    endDate={item.endDate}
+                    endTime={item.endTime}
+                    image1={item.image1Url}
+                    image2={item.image2Url}
+                    user={item.user}
+                    parentType="explore"
+                  />
+                ))}
+              </div>
+              <div className="row">
+                {exploreData.length===0?<h5 className="text-danger">Filtered items not found</h5>:<></>}
+              </div>
+            </div>
           </div>
         </div>
       </div>

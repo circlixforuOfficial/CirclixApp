@@ -1,5 +1,3 @@
-import React from "react";
-
 import UserNavbar from "../headerComponents/UserNavbar";
 import ExploreView from "../UserPageComponents.jsx/ExploreView";
 import UserFooter from "../footerSection/UserFooter";

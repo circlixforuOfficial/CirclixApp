@@ -1,4 +1,3 @@
-import React from "react";
 import UserNavbar from "../headerComponents/UserNavbar";
 import UserCards from "../UserPageComponents.jsx/UserCards";
 import UserFooter from "../footerSection/UserFooter";

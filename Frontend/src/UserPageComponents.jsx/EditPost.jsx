@@ -1,10 +1,22 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import plus from "../assets/plus-circle.svg";
 
-function CreatePostModal() {
-  const location=useLocation();
+function EditPost(props) {
+  const location = useLocation();
+  const {
+    itemId,
+    itemType,
+    description,
+    bidLimit,
+    startDate,
+    startTime,
+    endDate,
+    endTime,
+    image1,
+    image2,
+  } = props;
+
   const [formData, setFormData] = useState({
     startDate: "",
     endDate: "",
@@ -13,9 +25,11 @@ function CreatePostModal() {
     bidLimit: "",
     itemType: "",
     description: "",
-    image1: null,
-    image2: null,
+    image1Url: null,
+    image2Url: null,
   });
+  const [image1Preview, setImage1Preview] = useState(null);
+  const [image2Preview, setImage2Preview] = useState(null);
 
   const handleChange = (event) => {
     if (!event || !event.target) return;
@@ -24,116 +38,90 @@ function CreatePostModal() {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = async () => {
-    const {
-      startDate,
-      endDate,
-      startTime,
-      endTime,
-      bidLimit,
-      itemType,
-      description,
-      image1,
-      image2,
-    } = formData;
-
-    if (image1.size > 1 * 1024 * 1024 || image2.size > 1 * 1024 * 1024) {
-      alert("Images must be under 2MB.");
-      return;
-    }
-
+  const handleEditPost = async () => {
+    console.log(itemId);
     try {
-      if (
-        !startDate ||
-        !endDate ||
-        !startTime ||
-        !endTime ||
-        !bidLimit ||
-        !itemType ||
-        !description ||
-        !image1 ||
-        !image2
-      ) {
-        alert("Please fill in all fields.");
-        return;
+      const token = localStorage.getItem("token");
+      const payLoad = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        if (key !== "image1" && key !== "image2") {
+          payLoad.append(key, value ?? "");
+        }
+      });
+
+      if (formData.image1 instanceof File) {
+        payLoad.append("image1", formData.image1Url);
+      }
+      if (formData.image2 instanceof File) {
+        payLoad.append("image2", formData.image2Url);
       }
 
-      const token = localStorage.getItem("token");
-      const data = new FormData();
-      
-      const formatTime = (t) => (t.length === 5 ? `${t}:00` : t);
+      for (let [key, value] of payLoad.entries()) {
+        if (value instanceof File) {
+          console.log(
+            `${key}: [File] name=${value.name}, size=${value.size} bytes`
+          );
+        } else {
+          console.log(`${key}: ${value}`);
+        }
+      }
 
-      data.append("startDate", startDate);
-      data.append("endDate", endDate);
-      data.append("startTime", formatTime(startTime));
-      data.append("endTime", formatTime(endTime));
-      data.append("bidLimit", parseInt(bidLimit));
-      data.append("itemType", itemType);
-      data.append("description", description);
-      data.append("image1", image1);
-      data.append("image2", image2);
-
-      await axios.post(`http://localhost:8081/api/v1/post/CreatePost`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      alert("Post created successfully!");
+      await axios.patch(
+        `http://localhost:8081/api/v1/post/update-post/${itemId}`,
+        payLoad,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      alert("Post updated successfully.");
       window.location.reload();
     } catch (error) {
-      console.error("Error creating post:", error);
-      alert("Failed to create post.");
+      console.error("Edit error:", error.response?.data || error.message);
+      alert("Failed to update post.");
     }
   };
 
-  const handleReset = () => {
+  useEffect(() => {
     setFormData({
-      startDate: "",
-      endDate: "",
-      startTime: "",
-      endTime: "",
-      bidLimit: "",
-      itemType: "",
-      description: "",
-      image1: null,
-      image2: null,
+      startDate: startDate || "",
+      endDate: endDate || "",
+      startTime: startTime || "",
+      endTime: endTime || "",
+      bidLimit: bidLimit || "",
+      description: description || "",
+      itemType: itemType || "",
+      image1: image1 || null,
+      image2: image2 || null,
     });
 
-    document
-      .querySelectorAll("#newItem input[type='file']")
-      .forEach((input) => {
-        input.value = "";
-      });
-  };
+    if (image1) setImage1Preview(image1);
+    if (image2) setImage2Preview(image2);
+  }, [itemId]);
 
   return (
     <>
       <div>
         <button
-          type="button"
-          className="btn btn-primary"
+          className="btn btn-warning"
           data-bs-toggle="modal"
-          data-bs-target="#newItem"
+          data-bs-target="#editPostModal"
         >
-          Create <img src={plus} />
+          Edit Post
         </button>
-
+        {/* Edit Post Modal */}
         <div
           className="modal fade"
-          id="newItem"
+          id="editPostModal"
           tabIndex="-1"
-          aria-labelledby="exampleModalFullscreenSmLabel"
-          role="dialog"
+          aria-labelledby="editPostLabel"
+          aria-hidden="true"
         >
-          <div className="modal-dialog modal-dialog-scrollable modal-fullscreen-sm-down">
+          <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <h1
-                  className="modal-title fs-4"
-                  id="exampleModalFullscreenSmLabel"
-                >
-                  Create Post
-                </h1>
+                <h5 className="modal-title" id="editPostLabel">
+                  Edit Post
+                </h5>
                 <button
                   type="button"
                   className="btn-close"
@@ -239,10 +227,21 @@ function CreatePostModal() {
                       onChange={(e) => {
                         setFormData((prevData) => ({
                           ...prevData,
-                          image1: e.target.files[0], // store the File object
+                          image1Url: e.target.files[0], // store the File object
                         }));
+                        setImage1Preview(
+                          URL.createObjectURL(e.target.files[0])
+                        );
                       }}
                     />
+                    {image1Preview && (
+                      <img
+                        src={image1Preview}
+                        alt="Preview"
+                        className="img-fluid rounded mt-2"
+                        style={{ maxHeight: "100px" }}
+                      />
+                    )}
                   </div>
                   <div className="mb-2 d-flex flex-row">
                     <label className="w-75 form-label" htmlFor="">
@@ -256,10 +255,21 @@ function CreatePostModal() {
                       onChange={(e) => {
                         setFormData((prevData) => ({
                           ...prevData,
-                          image2: e.target.files[0], // store the File object
+                          image2Url: e.target.files[0], // store the File object
                         }));
+                        setImage2Preview(
+                          URL.createObjectURL(e.target.files[0])
+                        );
                       }}
                     />
+                    {image2Preview && (
+                      <img
+                        src={image2Preview}
+                        alt="Preview"
+                        className="img-fluid rounded mt-2"
+                        style={{ maxHeight: "100px" }}
+                      />
+                    )}
                   </div>
                 </form>
               </div>
@@ -267,25 +277,16 @@ function CreatePostModal() {
                 <button
                   type="button"
                   className="btn btn-primary"
-                  onClick={handleReset}
-                  data-bs-dismiss="modal"
+                  onClick={handleEditPost}
                 >
-                  Reset
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={handleSubmit}
-                  data-bs-dismiss="modal"
-                >
-                  Create post
+                  Save Changes
                 </button>
                 <button
                   type="button"
                   className="btn btn-secondary"
                   data-bs-dismiss="modal"
                 >
-                  Cancel
+                  Close
                 </button>
               </div>
             </div>
@@ -295,5 +296,4 @@ function CreatePostModal() {
     </>
   );
 }
-
-export default CreatePostModal;
+export default EditPost;

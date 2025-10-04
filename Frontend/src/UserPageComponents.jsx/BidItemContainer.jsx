@@ -35,23 +35,30 @@ function BidItemContainer(props) {
         <div className="item-container w-100 d-flex flex-row justify-content-between align-items-center">
           <div className="d-flex flex-row pt-2">
             <div className="d-flex flex-row w-100">
-              {bidData.map((item) => (
+              {bidData.map((item,index) => (
                 <ItemCardSmall
-                  key={"bid" + item.postID}
-                  itemId={item.postID}
-                  category={item.itemType} 
-                  description={item.description}
-                  bidLimit={item.bidLimit}
-                  startDate={item.startDate}
-                  startTime={item.startTime}
-                  endDate={item.endDate}
-                  endTime={item.endTime}
-                  image1={item.image1Url}
-                  image2={item.image2Url}
-                  user={item.user}
+                  key={"bid" + index}
+                  itemId={item.post.postID}
+                  category={item.post.itemType} 
+                  description={item.post.description}
+                  bidLimit={item.post.bidLimit}
+                  startDate={item.post.startDate}
+                  startTime={item.post.startTime}
+                  endDate={item.post.endDate}
+                  endTime={item.post.endTime}
+                  image1={item.post.image1Url}
+                  image2={item.post.image2Url}
+                  user={item.post.user}
                   parentType="bids"
                 />
               ))}
+            </div>
+             <div className="row">
+              {bidData.length === 0 ? (
+                <h5 className="text-danger">Items not found</h5>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
           <div className="see-all-btn d-flex justify-content-center align-items-center">

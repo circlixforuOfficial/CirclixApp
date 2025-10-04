@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import arrow from "../assets/arrow-right-circle.svg";
+import arrow from "../assets/digital-products.png";
 
 function ApiImage(props) {
   const [imageSrc, setImageSrc] = useState(null);
@@ -18,7 +18,7 @@ function ApiImage(props) {
 
       setImageSrc(imageUrl);
     } catch (err) {
-      setError(err.message);
+      console.log(err.message);
     }
   };
 

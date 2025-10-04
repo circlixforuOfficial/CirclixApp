@@ -2,46 +2,9 @@ import { React, useState, useEffect } from "react";
 import axios from "axios";
 import ItemCardSmall from "./ItemCardSmall";
 
-function BidsForMeView(props) {
+function BidsForMeView() {
 
-   const testData = [
-    {
-      itemId: "1",
-      itemName: "Laptop",
-      category: "Electronics",
-      description: "High-end gaming laptop",
-      bidLimit: "5000",
-      startDate: "2025-12-31",
-      startTime: "23:59",
-      endDate: "2025-12-31",
-      endTime: "23:59",
-    },
-    {
-      itemId: "2",
-      itemName: "Chair",
-      category: "Furniture",
-      description: "Ergonomic office chair",
-      bidLimit: "1500",
-      startDate: "2025-12-31",
-      startTime: "23:59",
-      endDate: "2025-11-30",
-      endTime: "18:00",
-    },
-  ];
-
-  const [bidsForMeData, setBidsForMeData] = useState(
-      {
-        itemId: "",
-        itemName: "",
-        category: "",
-        description: "",
-        bidLimit: "",
-        startDate: "",
-        startTime: "",
-        endDate: "",
-        endTime: "",
-      }
-    );
+  const [bidsForMeData, setBidsForMeData] = useState([]);
 
     {
     /*Fetch bid data */
@@ -49,15 +12,15 @@ function BidsForMeView(props) {
   const fetchBidsForMeData = async () => {
     try {
       const token = localStorage.getItem("token");
-      const { data } = await axios.get(
-        "http://localhost:8080/api/v1/user/profile",
+      const response = await axios.get(
+        "http://localhost:8087/api/v1/bid/getBidsForMe",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      setBidsForMeData(data);
+      setBidsForMeData(response.data);
     } catch (err) {
-      console.error("Failed to fetch bid data:", err);
+      console.error("Failed to fetch bids for me data:", err);
     }
   };
 
@@ -74,20 +37,31 @@ function BidsForMeView(props) {
             <h2 className="fs-2 ms-1">Bids For My Posts</h2>
           </div>
           <div className="d-flex flex-wrap py-4 px-5 w-100 vh-100 border rounded-4">
-            {testData.map((item) => (
+            {bidsForMeData.map((item) => (
                 <ItemCardSmall
-                  key={item.itemId}
-                  itemId={item.itemId}
-                  itemName={item.itemName}
-                  category={item.category}
-                  description={item.description}
-                  bidLimit={item.bidLimit}
-                  endDate={item.endDate}
-                  endTime={item.endTime}
+                  key={"bidsForMe" + item.post.postID}
+                  itemId={item.post.postID}
+                  category={item.post.itemType}
+                  description={item.post.description}
+                  bidLimit={item.post.bidLimit}
+                  startDate={item.post.startDate}
+                  startTime={item.post.startTime}
+                  endDate={item.post.endDate}
+                  endTime={item.post.endTime}
+                  image1={item.post.image1Url}
+                  image2={item.post.image2Url}
+                  user={item.post.user}
                   parentType="bidsforme"
                 />
               ))}
           </div>
+          <div className="row">
+              {bidsForMeData.length === 0 ? (
+                <h5 className="text-danger">Items not found</h5>
+              ) : (
+                <></>
+              )}
+            </div>
         </div>
       </div>
     </>

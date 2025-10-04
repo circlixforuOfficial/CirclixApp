@@ -1,5 +1,3 @@
-import React from "react";
-
 import UserNavbar from "../headerComponents/UserNavbar";
 import BidsForMeView from "../UserPageComponents.jsx/BidsForMeView";
 import UserFooter from "../footerSection/UserFooter";

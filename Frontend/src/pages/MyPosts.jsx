@@ -1,5 +1,3 @@
-import React from "react";
-
 import UserNavbar from "../headerComponents/UserNavbar";
 import MyPostView from "../UserPageComponents.jsx/MyPostView";
 import UserFooter from "../footerSection/UserFooter";
