@@ -9,8 +9,9 @@ mvnw
 mvnw.cmd
 .mvn/wrapper
 **/src/main/**/target/
-**/src/test/**/target/
-
+**/src/test/**
+# Ignore compiled test classes
+**/src/test/**/*.class
 ### STS ###
 .apt_generated
 .classpath
