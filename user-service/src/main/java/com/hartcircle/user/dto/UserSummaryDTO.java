@@ -1,7 +1,5 @@
 package com.hartcircle.user.dto;
 
-import com.hartcircle.user.entity.Ratings;
-
 import java.sql.Date;
 
 public class UserSummaryDTO {

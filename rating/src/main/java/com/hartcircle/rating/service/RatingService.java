@@ -1,31 +1,28 @@
-package com.hartcircle.user.service;
+package com.hartcircle.rating.service;
 
-
-import com.hartcircle.user.dto.RatingDTO;
-import com.hartcircle.user.entity.Ratings;
-import com.hartcircle.user.entity.User;
-import com.hartcircle.user.repo.RatingRepo;
-import com.hartcircle.user.repo.UserRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.hartcircle.rating.dto.RatingDTO;
+import com.hartcircle.rating.entity.Ratings;
+import com.hartcircle.rating.repo.RatingRepo;
 
 @Service
 public class RatingService {
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private RatingRepo ratingRepo;
-
+    @Autowired
+    private UserClient userClient;
     @Autowired
     private PostClient postClient;
 
     public void giveRatesForPosts(String raterNIC, int postID, @NotNull RatingDTO ratingDTO, String authHeader) {
         // Check Rater exists
-        userRepository.findByNic(raterNIC)
-                .orElseThrow(() -> new RuntimeException("User not found!"));
+        if (!userClient.userExists(raterNIC)) {
+            throw new RuntimeException("User not found");
+        }
 
         // Get post owner NIC from post-service
         String ownerNIC = postClient.getUserNIC(postID, authHeader);
@@ -44,8 +41,5 @@ public class RatingService {
 
         ratingRepo.save(ratings);
     }
+
 }
-
-
-
-
