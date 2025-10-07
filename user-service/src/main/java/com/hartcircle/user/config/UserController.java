@@ -1,10 +1,5 @@
 package com.hartcircle.user.config;
 
-import com.hartcircle.user.dto.UserSummaryDTO;
-import com.hartcircle.user.entity.Ratings;
-import com.hartcircle.user.entity.User;
-import com.hartcircle.user.repo.RatingRepo;
-import com.hartcircle.user.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,17 +7,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hartcircle.user.dto.UserSummaryDTO;
+import com.hartcircle.user.entity.User;
+import com.hartcircle.user.repo.UserRepository;
+import com.hartcircle.user.service.RatingClient;
+
 //Handle requests to check if a user exists by NIC.Help another classes.Reply to UserClient.java class in Post-Service.
 //help find user via nic
 
 @RestController
-@RequestMapping("/api/v1/user")  // ✅ This is the correct prefix
+@RequestMapping("/api/v1/user")  //This is prefix
 public class UserController {
 
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private RatingRepo ratingRepo;
+    private RatingClient ratingClient;
 
     @GetMapping("/{nic}")
     public ResponseEntity<Boolean> checkUserExists(@PathVariable("nic") String nic) {
@@ -37,7 +37,7 @@ public class UserController {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         // Handle null safely
-        Double ratingsValue = ratingRepo.findAverageRatingForUser(nic);
+        Double ratingsValue = ratingClient.getUserRating(nic);
         if (ratingsValue == null) {
             ratingsValue = 0.0; // or any default value you prefer
         } else {
@@ -65,6 +65,7 @@ public class UserController {
         return ResponseEntity.ok(findUser.getUserId());
     }
 
+
     @GetMapping("/userdata/{tpNumber}")
     public ResponseEntity<UserSummaryDTO> CheckUserBytpNumber(@PathVariable("tpNumber") String tpNumber){
 
@@ -83,6 +84,8 @@ public class UserController {
         return ResponseEntity.ok(dto);
 
     }
+
+
 }
 
 

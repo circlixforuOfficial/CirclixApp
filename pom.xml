@@ -14,6 +14,7 @@
 
         <module>post-service</module>
         <module>bid-service</module>
+        <module>rating</module>
         <module>sms-service</module>
         <module>admin-service</module>
     </modules>
@@ -42,6 +43,12 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+    </dependencies>
 
     <build>
         <pluginManagement>
