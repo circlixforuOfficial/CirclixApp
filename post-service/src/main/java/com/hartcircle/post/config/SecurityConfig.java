@@ -24,7 +24,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.disable()) 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                         .requestMatchers(
                                 "/api/v1/user/CreatePost",
                                 "/api/v1/post/image/**",
