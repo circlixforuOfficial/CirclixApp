@@ -8,6 +8,7 @@ import java.sql.Time;
 
 public class MyBiddedInfo {
 
+    private Integer bidID;
     private Double biddedAmount;
     private Date mybidedDay;
     private Time myBidedTime;
@@ -25,6 +26,14 @@ public class MyBiddedInfo {
 
     public void setPost(PostViewDto post) {
         this.post = post;
+    }
+
+    public Integer getBidID() {
+        return bidID;
+    }
+
+    public void setBidID(Integer bidID) {
+        this.bidID = bidID ;
     }
 
     public Double getBiddedAmount() {

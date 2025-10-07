@@ -24,6 +24,7 @@ public class SelectMyOwnBids {
 
         return bids.stream().map(bid -> {
             MyBiddedInfo dto = new MyBiddedInfo();
+            dto.setBidID(bid.getBidID());
             dto.setBiddedAmount(bid.getAmount());
             dto.setMybidedDay(bid.getBidDate());
             dto.setMyBidedTime(bid.getBidTime());

@@ -1,0 +1,46 @@
+.idea/
+.vscode/
+
+HELP.md
+.gitattributes
+target/
+# Maven Wrapper
+mvnw
+mvnw.cmd
+.mvn/wrapper
+**/src/main/**/target/
+**/src/test/**
+# Ignore compiled test classes
+**/src/test/**/*.class
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+# ========================
+*.log
+*.tmp
+*.bak
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/

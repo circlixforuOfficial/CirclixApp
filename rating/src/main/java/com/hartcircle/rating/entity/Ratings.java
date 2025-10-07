@@ -1,9 +1,18 @@
-package com.hartcircle.user.entity;
+package com.hartcircle.rating.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="ratingsdata")
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class Ratings {
 
     @Id
@@ -19,11 +28,8 @@ public class Ratings {
     @Column(nullable = false)
     private Integer postID;    // Which post is rated
 
-    @Column(nullable = false)
-    private Double rateValue;  // Rating value
-
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(Integer id) {
@@ -31,7 +37,7 @@ public class Ratings {
     }
 
     public String getRaterNIC() {
-        return raterNIC;
+        return this.raterNIC;
     }
 
     public void setRaterNIC(String raterNIC) {
@@ -39,7 +45,7 @@ public class Ratings {
     }
 
     public String getOwnerNIC() {
-        return ownerNIC;
+        return this.ownerNIC;
     }
 
     public void setOwnerNIC(String ownerNIC) {
@@ -47,7 +53,7 @@ public class Ratings {
     }
 
     public Integer getPostID() {
-        return postID;
+        return this.postID;
     }
 
     public void setPostID(Integer postID) {
@@ -55,15 +61,15 @@ public class Ratings {
     }
 
     public Double getRateValue() {
-        return rateValue;
+        return this.rateValue;
     }
 
     public void setRateValue(Double rateValue) {
         this.rateValue = rateValue;
     }
+
+    @Column(nullable = false)
+    private Double rateValue;  // Rating value
+
+
 }
-
-
-
-
-

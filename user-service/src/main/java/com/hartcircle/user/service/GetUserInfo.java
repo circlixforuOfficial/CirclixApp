@@ -2,12 +2,10 @@ package com.hartcircle.user.service;
 
 import com.hartcircle.user.dto.UserSummaryDTO;
 import com.hartcircle.user.entity.User;
-import com.hartcircle.user.repo.RatingRepo;
 import com.hartcircle.user.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Service ;
 
 @Service
 public class GetUserInfo {
@@ -15,13 +13,13 @@ public class GetUserInfo {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private RatingRepo ratingRepo;
+    private RatingClient ratingClient;
 
     public UserSummaryDTO getUserData(String nic) {
         User user = userRepository.findByNic(nic)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        Double avgRating=ratingRepo.findAverageRatingForUser(nic);
+        Double avgRating=ratingClient.getUserRating(nic);
         if(avgRating==null) avgRating=0.0;
 
         UserSummaryDTO dto = new UserSummaryDTO();
