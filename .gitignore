@@ -29,6 +29,7 @@ bid-service/target
 sms-service/target
 admin-service/target
 .env
-
+k8s/secrets.yaml
+k8s/configmap.yaml
 
 
