@@ -9,6 +9,7 @@ import DeletePost from "./DeletePost";
 import AddBid from "./AddBid";
 import EditBid from "./EditBid";
 import CancelBid from "./CancelBid";
+import Rating from "./Rating";
 
 function ItemDetailView(props) {
   const { type, id } = useParams();
@@ -17,7 +18,6 @@ function ItemDetailView(props) {
 
   const fetchDetails = async () => {
     const token = localStorage.getItem("token");
-    console.log(token);
     let endPoint;
     if (type === "mypost") {
       endPoint = "http://localhost:8081/api/v1/post/getMyPosts";
@@ -47,7 +47,6 @@ function ItemDetailView(props) {
 
       if (foundItem) {
         setFullItem(foundItem);
-        console.log(foundItem);
         if (type === "mypost") {
           const postDetails = foundItem;
           setItem(postDetails);
@@ -57,6 +56,7 @@ function ItemDetailView(props) {
         } else {
           const postDetails = foundItem.post;
           setItem(postDetails);
+          console.log(postDetails.user.myAvgRateValue)
         }
       } else {
         console.warn("Item not found for ID:", id);
@@ -126,6 +126,9 @@ function ItemDetailView(props) {
                   <p className="text-danger mt-3">Item not found.</p>
                 )}
               </div>
+              <Rating 
+              itemId={item.postID}
+              item={item}/>
               {/* Action Buttons */}
               <div className="mt-4 d-flex gap-3">
                 {type === "mypost" && (

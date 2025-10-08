@@ -5,6 +5,10 @@ import avatar from '../assets/profilePic.jpeg';
 
 function UserProfileCard(props) {
   const userFullName = props.fName + " " + props.lName;
+  const rating = typeof props.rating === "number"
+  ? props.rating.toFixed(2)
+  : "N/A";
+
 
   return (
     <>
@@ -33,7 +37,7 @@ function UserProfileCard(props) {
             { label: "DOB", value: props.dob },
             { label: "Address", value: props.address },
             { label: "TP Number", value: props.tpNumber },
-            { label: "Rating", value: props.rating },
+            { label: "Rating", value: rating },
           ].map(({ label, value }) => (
             <li key={label} className="list-group-item text-center w-100">
               <span>{label} : </span>
