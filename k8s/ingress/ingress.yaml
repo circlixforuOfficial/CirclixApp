@@ -30,3 +30,10 @@ spec:
                 name: post-service
                 port:
                   number: 8081
+          - path: /bid
+            pathType: Prefix
+            backend:
+              service:
+                name: bid-service
+                port:
+                  number: 8087

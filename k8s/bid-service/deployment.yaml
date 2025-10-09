@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bid-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bid-service
+  template:
+    metadata:
+      labels:
+        app: bid-service
+    spec:
+      containers:
+        - name: bid-service
+          image: bid-service:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8087
+          env:
+            # Database connection
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://mysql-service:3306/BidData
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: circlix-config
+                  key: BID_DB_USER
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: circlix-secrets
+                  key: BID_DB_PASSWORD
+
+            # Service URLs
+            - name: JWT_SERVICE_URL
+              value: http://jwt-service:8082
+            - name: USER_SERVICE_URL
+              value: http://user-service:8080
+            - name: POST_SERVICE_URL
+              value: http://post-seervice:8081
+
+          envFrom:
+            - configMapRef:
+                name: circlix-config
