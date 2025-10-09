@@ -29,6 +29,12 @@ function RegisterSlide(props) {
 
   const handleRegister = async (event) => {
     event.preventDefault();
+    // Validate TP Number length (/d=only digits, {10} exactly 10 digits )
+  if (!/^\d{10}$/.test(formData.tpNumber)) {    
+    alert("TP Number must be exactly 10 digits.");
+    return;
+  }
+
     try {
       const data = new FormData();
       Object.entries(formData).forEach(([key, value]) => {
@@ -140,6 +146,7 @@ function RegisterSlide(props) {
               labelText="TP Number"
               name="tpNumber"
               value={formData.tpNumber}
+              maxLength={10}
               onSendData={handleData}
             />
             <RegisterInput
