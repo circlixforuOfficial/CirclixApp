@@ -15,6 +15,7 @@ function RegisterInput(props) {
           placeholder={props.labelText}
           type={props.inputType}
           name={props.name}
+          maxLength={props.maxLength}//pass props
           onChange={sendData}
           value={props.value}
         />
